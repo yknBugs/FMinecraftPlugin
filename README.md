@@ -6,6 +6,8 @@ A Minecraft Bukkit Server Plugin, providing various functions and games.
 
 暂时取消gui动态图标，后续尝试实现利用占位符功能实现
 
+holderText 为正则表达式时会抛出异常
+
 ## Project Function
 
 - GUI Command Executor
