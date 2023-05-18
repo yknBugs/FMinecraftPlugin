@@ -1,0 +1,473 @@
+# 控制台输出更多信息
+debug: true
+
+# 消息前缀
+prefix: '&d&lF &r&e> &e'
+
+# 指令消息设置，指令返回值参数占位符用[1]，[2]，[3].....表示
+# active表示开关。help表示该指令在help指令中的帮助描述文本
+# 注意help指令会自动加指令格式前缀。所以不用在描述的开头加/f 指令名
+command:
+  active: true
+  nopermission: '你没有使用指令 [1] 的权限'
+  wrongparam: '未知指令 [1]'
+  onlyplayeruse: '指令 [1] 只能由游戏内的玩家使用'
+  missingdata: '未找到相关数据'
+  # f help指令
+  help:
+    active: true
+    help: '<页码|指令名> 获取指令帮助'
+    # 是否展示没有权限使用的指令
+    shownopermission: false
+    # 每个页面最多显示的指令条数
+    maxperpage: 5
+    # 支持查询的指令列表，强烈建议将help指令排在第一位以便教人如何看帮助的下一页，list至少有一个值
+    list:
+    - help
+    - version
+    - gui
+    - back
+    - message
+    - run
+    - delay
+    firstline: '显示帮助手册的第 [1] 页 | 共 [2] 页'
+    wrongpage: '找不到指令 [1]'
+    pagetoosmall: '无效的页码 [1]: 页码不能为零或负数'
+    pagetoolarge: '找不到页码 [1]: 最大页数为 [2]'
+  # f version指令，该指令无法关闭[可用于保证help指令至少有一个返回值]
+  version:
+    help: '显示插件信息'
+  # f gui指令
+  gui:
+    active: true
+    help: '打开菜单'
+  # f run命令，用于执行自定义指令
+  # 需要fplugin.f.run.<自定义指令名称>权限来运行相应的自定义指令
+  # 此指令若执行成功则没有任何消息反馈(考虑到用于自定义指令中避免刷屏而设置)
+  run:
+    active: true
+    help: '<名称> [参数] 运行自定义指令'
+    missingname: '缺少指令参数: 未指定执行自定义指令的名称'
+    wrongname: '找不到自定义指令 [1]'
+    nopermission: '你没有使用自定义指令 [1] 的权限'
+    notsafe: '你输入的自定义指令的指令参数 [1] 未能通过合法性检查'
+    missingparams: '缺少 [3] 个自定义指令参数: 应输入 [1] 个参数'
+    wrongparams: '参数 [1] 未满足自定义指令的要求'
+    list:
+    - tell
+    - calc
+    - stop
+    - tempdeop
+    - tempop
+    - test
+  # f delay指令，让某个指令延迟特定时长后，由特定玩家执行
+  # 注意:此处若使用PlaceholderAPI占位符，将以指令发送者进行解析，而不是参数中指定的执行者
+  # 允许用f delay指令延迟执行另一个f delay指令
+  # 需要fplugin.f.delay权限将执行者设置为自己
+  # 需要fplugin.f.delay.other权限将执行者设置为其它玩家
+  # 需要fplugin.f.delay.console权限将执行者设置为控制台
+  # 警告: fplugin.f.delay.console权限意味着玩家将能通过该命令间接使用所有的指令
+  delay:
+    active: true
+    help: '<时长> <执行者> <指令> 延迟指定游戏刻后让特定对象执行指令'
+    missingtime: '缺少指令参数: 请指定延迟时长'
+    wrongtime: '无效的延迟时长 [1]: 必须为非负整数'
+    timetoosmall: '无效的延迟时长 [1]: 不能为负数'
+    timetoolarge: '无效的延迟时长 [1]: 数值过大。当前最大支持 99999999'
+    missingexecuter: '缺少指令参数: 请指定指令的执行者'
+    missingcommand: '缺少指令参数: 请指定要延迟执行的指令'
+    consolepermission: '你没有让控制台代替你执行指令的权限'
+    otherpermission: '你没有让其他玩家代替你执行指令的权限'
+    clearpermission: '你没有移除计划延迟执行的指令的权限'
+    noexecuter: '指令 [1] 延迟 [2] 游戏刻后执行失败: 找不到指令执行者 [3]'
+    delaysuccess: '指令 [1] 将在 [2] 游戏刻后由 [3] 执行'
+    warnexecuter: '&c警告: 当前找不到执行者 [3]: 后续执行可能失败'
+    executesuccess: '现在由 [3] 执行 [2] 游戏刻前计划延迟执行的指令 [1]'
+    clearsuccess: '移除了 [1] 条计划延迟执行的指令'
+  # f message指令，向指定玩家或全部玩家广播消息而不在控制台显示日志
+  # 权限fplugin.f.message.override允许将override属性设置为true
+  # 权限fplugin.f.message来使用该指令，权限fplugin.f.message.unsafe来允许消息中包含占位符等危险内容
+  # 权限fplugin.f.message.<broadcast|send|remove>来使用子指令
+  # 无fplugin.f.message.remove权限玩家无法在消息已存在时创造新的消息
+  # 权限fplugin.f.message.type.<actionbar|bossbar|chat|...>来允许在指定位置显示消息
+  # 此指令若执行成功则没有任何消息反馈(考虑到用于自定义指令中避免刷屏而设置)
+  message:
+    active: true
+    help: '<操作> <显示位置> <有无前缀> <样式和消息内容> 发送一条消息'
+    missingopr: '缺少指令参数: 请指定一项操作'
+    missingname: '缺少指令参数: 请指定接收消息的玩家'
+    missingtype: '缺少指令参数: 请指定消息的显示位置'
+    missingprefix: '缺少指令参数: 请指定是否显示前缀'
+    missingtext: '缺少指令参数: 请指定要显示的消息内容'
+    missingcolor: '缺少指令参数: 请指定 bossbar 的颜色'
+    missingstyle: '缺少指令参数: 请指定 bossbar 的样式'
+    missingtime: '缺少指令参数: 请指定 bossbar 消息显示的持续时间'
+    missingor: '缺少指令参数: 请指定 bossbar 消息显示是否为高优先级'
+    wrongopr: '无效的操作名称 [1]: 未知操作'
+    wrongname: '找不到玩家 [1]'
+    wrongtype: '显示位置 [1] 无效'
+    wrongprefix: '是否显示前缀参数 [1] 无效: 只能为 true 或 false'
+    wrongcolor: '未知 bossbar 颜色 [1]'
+    wrongstyle: '未知 bossbar 样式 [1]'
+    wrongtime: '无效的显示时长 [1]: 必须为非负整数'
+    wrongor: '是否为高优先级参数 [1] 无效: 只能为 true 或 false'
+    timetoosmall: '无效的显示时长 [1]: 不能为负数'
+    timetoolarge: '显示时长 [1] 数值过大: 已自动调整为永久显示'
+    nosafepermission: '你没有发送这条消息的权限'
+    nooprpermission: '你没有 [1] 消息的权限'
+    notypepermission: '你没有将消息显示在 [1] 上的权限'
+    noorpermission: '你没有将消息设为优先显示的权限'
+    duplicateerror: '你没有 remove 权限但当前已存在 [1] 消息: 无法替换'
+  back:
+    active: true
+    help: '传送到上一个地点'
+    message: '已传送到 [1] 秒前所在的位置 [2]'
+  # f devfunction指令。指令只供开发者使用，用于测试开发中的函数和功能，必须在debug设置为true的情况下才能运行
+  devfunction:
+    active: true
+    help: '这个指令仅供开发人员使用'
+    startmessage: '开始执行测试函数'
+    endmessage: '测试函数执行完毕'
+    errormessage: '在执行测试函数的过程中发生了错误'
+    printstacktrace: true
+    ingamestacktrace: true
+
+# gui设置
+gui:
+  # 指令打开的gui界面
+  cmdgui:
+    title: 菜单
+    slot: 36
+    # gui列表，可使用物品描述，也可以使用物品预设名称
+    # 预设有: air 空气，copyright 插件信息，loginlocation登录地，lastsafelocation上个安全点
+    list:
+    - copyright
+    - air
+    - paper
+    - air
+    - spawn
+    - air
+    - food
+
+# 自定义物品功能
+customitem:
+  # 这里以自定义的预设名称paper为例子，内包含三个参数
+  # item物品描述，commands在满足相应条件下执行的指令，支持占位符
+  # 指令占位符使用PlaceholderAPI格式，例如%player_name%表示玩家名称
+  # needpermission是否需要玩家有相应权限才能执行，closegui点击物品后是否关闭gui
+  # 这里定义好后，可在其它地方调用预设好的物品
+  paper:
+    item: paper 1 name:&6欢迎使用F插件 lore:&c作者:插件仍在测试中|&d出了bug我可不管~
+    commands: []
+    needpermission: false
+    closegui: false
+  spawn:
+    item: white_bed 1 name:&a返回主城
+    commands:
+    - spawn
+    needpermission: true
+    closegui: true
+  food:
+    item: cooked_porkchop 1 name:&a获取食物 lore:&c冷却时间:5分钟
+    commands:
+    - kit food
+    needpermission: true
+    closegui: true
+
+# 自定义指令功能，通过/f run <名称> [自定义参数] 来调用
+# 自定义的帮助可通过指令/f run help来获取
+# 自定义指令的权限为fplugin.f.run.<自定义指令名称>
+# help为帮助内容，isconsole表示该指令是否强制由控制台执行
+# issafe表示是否对玩家输入内容进行安全检查，防止将玩家输入内容作为代码执行
+# issafe关闭后，玩家将无法在参数中使用PlaceholderAPI占位符，但配置文件中仍然可以
+# 警告:请谨慎在自定义指令中使用/f run指令，否则可能造成死循环导致服务器卡死
+# 记得自定完成后在指令设置中添加上对应的自定义指令的名称
+customcommand:
+  calc:
+    help: '<计算式> 计算指定的数学算式'
+    isconsole: true
+    issafe: true
+    params: 
+    - '^.*$'
+    command:
+    - f message send %player_name% chat true = %math_([1])%
+  tell:
+    help: '解析Placeholder运算符'
+    isconsole: true
+    issafe: false
+    params: 
+    - '^.*$'
+    command:
+    - f message send %player_name% chat true [1]
+  stop:
+    help: '<刻> 延迟关闭服务器'
+    isconsole: true
+    issafe: true
+    params: 
+    - '^[0-9]{2,7}$'
+    command:
+    - f message broadcast bossbar true red solid [1] true 服务器将在 [s] 秒后关闭 
+    - f delay [1] console stop
+  tempdeop:
+    help: '<权限> 一分钟内暂时取消指定权限'
+    isconsole: true
+    issafe: true
+    params: 
+    - '^.*$'
+    command:
+    - f message send %player_name% chat true 暂时剥夺了权限 [1]
+    - f message send %player_name% chat true 权限将在一分钟后恢复
+    - manudelp %player_name% [1]
+    - f delay 1200 console manuaddp %player_name% [1]
+    - f delay 1200 console f message send %player_name% chat true 权限 [1] 已经恢复
+  tempop:
+    help: '<权限> 一分钟内暂时添加指定权限'
+    isconsole: true
+    issafe: true
+    params: 
+    - '^.*$'
+    command:
+    - f message send %player_name% chat true 暂时授予了权限 [1]
+    - f message send %player_name% chat true 权限将在一分钟后消失
+    - manuaddp %player_name% [1]
+    - f delay 1200 console manudelp %player_name% [1]
+    - f delay 1200 console f message send %player_name% chat true 权限 [1] 已经消失
+  test:
+    help: '测试功能是否正常工作'
+    isconsole: true
+    issafe: false
+    params: []
+    command:
+    - f message broadcast chat true 测试开始
+    - f delay 200 console f message broadcast chat true 测试完毕
+
+# 传送点，坐标保存相关设置
+waypoint:
+  # 在水上是否视作安全
+  iswatersafe: true
+  # 安全位置保存时间间隔，单位tick
+  savesafecd: 200
+  # 最大保存的死亡点个数
+  maxdeathpoint: 10
+
+# 定义弹射物击中生物的消息
+# 占位符 [a]攻击者名称 [v]被攻击者名称 [h]攻击者剩余生命值 [d]被攻击者剩余生命值
+# [p]攻击者坐标 [l]被攻击者坐标 [w]弹射物名称 [x]两者间的距离
+# 如果以斜杠开头，则被视作执行指令，指令由控制台执行
+# 注意，如果是指令，则如果被射中者是玩家，会执行一次被beingshoot中定义的指令
+# 如果射中者是玩家，会执行一次shootother中定义的指令。all中定义的指令一定会被执行
+# 这意味着当玩家射中玩家时会执行全部的三个指令，当怪物射中怪物只会执行all中定义的指令
+# 需要权限fplugin.shootmessage.beingshoot看到自己被射中的消息
+# 需要权限fplugin.shootmessage.shootother看到自己射中别人的消息
+# 需要权限fplugin.shootmessage.all看到所有的消息
+# 射中事件发生后，实体才会掉血。因此消息将于射中后的2游戏刻显示
+shootmessage:
+  active: true
+  beingshoot: '你被 [a] (生命值: [h]) 用 [w] 击中'
+  shootother: '你击中了 [x] 米以外的 [v] (生命值: [d])'
+  all: '[a] 用 [w] 击中了 [x] 米外的 [v] (生命值: [d])'
+  # 生命值保留的有效数字位数
+  healthaccuracy: 1
+  # 忽略死亡生物的消息。开启可防止生物死亡消息被射中消息覆盖
+  ignoredeath: true
+
+# 定义玩家死亡信息
+# 需要权限fplugin.playerdeath.self来看到自己死亡消息
+# 需要权限fplugin.playerdeath.others来看到他人死亡消息
+# 支持PlaceholderAPI占位符。另外占位符[l]表示死亡坐标，[p]表示玩家名称，[t]表示时间
+# 如果以斜杠开头，则被视作执行指令，指令由控制台执行
+playerdeath:
+  active: true
+  message:
+  - '[p] 的死亡坐标为 [l]'
+
+# 定义生物死亡消息
+# 玩家需要权限fplugin.mobdeathmessage.actionbar才能看到所有actionbar消息
+# 玩家需要权限fplugin.mobdeathmessage.boss才能看到所有高生命值生物死亡消息
+# 玩家需要权限fplugin.mobdeathmessage.revenge才能看到所有复仇消息
+# 玩家需要权限fplugin.mobdeathmessage.custom才能看到所有重命名后生物的死亡消息
+# 占位符[1]被杀者，[2]最后一击者，[3]助攻者，[4]死者坐标
+# 如果消息内容以斜杠开头，则被视作执行指令，指令由控制台执行
+# 注意:占位符返回的是相关实体名称，并不能直接作用于指令的选择器目标
+# 同样，死者坐标占位符返回的内容也不能用作指令坐标占位符
+# 消息将在生物死亡时显示在有权限玩家的actionbar上
+# 死亡生物如果特殊，则显示在聊天栏里面
+mobdeathmessage:
+  active: true
+  # 最大生命值大于(不包括等于)此的生物死亡时，消息显示在聊天栏上
+  maxhealth: 150
+  # 玩家被怪杀死后，复仇杀死该怪是否将消息显示在聊天栏上
+  revenge: true
+  # 给杀死玩家的生物加tag的名称，来辨别生物
+  revengetag: killer
+  # 杀死有自定义名称或者重命名后的生物是否将消息显示在聊天栏上
+  custom: true
+  # 定义死亡消息文本
+  reason:
+    noreason: '[1] 死了'
+    unknownreason: 
+      nokiller: '[1] 被杀死了'
+      onlykiller: '[1] 被 [2] 杀死了'
+      onlydamager: '[1] 在与 [3] 的战斗中被杀'
+      both: '[1] 在与 [3] 的战斗中被 [2] 杀死了'
+    blockexplosion: 
+      nokiller: '[1] 爆炸了'
+      onlykiller: '[1] 被 [2] 炸死了'
+      onlydamager: '[1] 在与 [3] 的战斗中爆炸了'
+      both: '[1] 在与 [3] 的战斗中被 [2] 炸死了'
+    contact: 
+      nokiller: '[1] 被戳死了'
+      onlykiller: '[1] 被 [2] 戳死了'
+      onlydamager: '[1] 在与 [3] 的战斗被戳死了'
+      both: '[1] 在与 [3] 的战斗中被 [2] 戳死了'
+    cramming: 
+      nokiller: '[1] 因过度挤压而死'
+      onlykiller: '[1] 被 [2] 挤扁了'
+      onlydamager: '[1] 在与 [3] 的战斗因过度挤压而死'
+      both: '[1] 在与 [3] 的战斗中被 [2] 挤扁了'
+    custom: 
+      nokiller: '[1] 死了'
+      onlykiller: '[1] 被 [2] 打死了'
+      onlydamager: '[1] 在与 [3] 的战斗中死了'
+      both: '[1] 在与 [3] 的战斗中被 [2] 打死了'
+    dragonbreath: 
+      nokiller: '[1] 被龙息烤熟了'
+      onlykiller: '[1] 被 [2] 的龙息烤熟了'
+      onlydamager: '[1] 在与 [3] 的战斗中被龙息烤熟了'
+      both: '[1] 在与 [3] 的战斗中被 [2] 的龙息烤熟了'
+    drowing: 
+      nokiller: '[1] 淹死了'
+      onlykiller: '[1] 被 [2] 淹死了'
+      onlydamager: '[1] 在试图逃离 [3] 时淹死了'
+      both: '[1] 在试图逃离 [3] 时被 [2] 淹死了'
+    dryout: 
+      nokiller: '[1] 脱水了'
+      onlykiller: '[1] 被 [2] 榨干了'
+      onlydamager: '[1] 在试图逃离 [3] 时脱水而死'
+      both: '[1] 在试图逃离 [3] 时被 [2] 榨干了'
+    entityattack: 
+      nokiller: '[1] 被杀死了'
+      onlykiller: '[1] 被 [2] 杀死了'
+      onlydamager: '[1] 在试图逃离 [3] 时被杀死了'
+      both: '[1] 在试图逃离 [3] 时被 [2] 杀死了'
+    entityexplosion: 
+      nokiller: '[1] 爆炸了'
+      onlykiller: '[1] 被 [2] 炸死了'
+      onlydamager: '[1] 在试图逃离 [3] 时爆炸了'
+      both: '[1] 在试图逃离 [3] 时被 [2] 炸死了'
+    entitysweepattack:
+      nokiller: '[1] 被横扫攻击击杀'
+      onlykiller: '[1] 被 [2] 用横扫攻击击杀'
+      onlydamager: '[1] 在试图逃离 [3] 时被横扫攻击击杀'
+      both: '[1] 在试图逃离 [3] 时被 [2] 用横扫攻击击杀'
+    fall:
+      nokiller: '[1] 从高处摔了下来'
+      onlykiller: '[1] 被 [2] 击落'
+      onlydamager: '[1] 因为 [3] 注定要摔死'
+      both: '[1] 在试图逃离 [3] 时被 [2] 击落'
+    fallingblock:
+      nokiller: '[1] 被压扁了'
+      onlykiller: '[1] 被 [2] 压扁了'
+      onlydamager: '[1] 在与 [3] 战斗时被压扁了'
+      both: '[1] 在与 [3] 战斗时被 [2] 压扁了'
+    fire: 
+      nokiller: '[1] 浴火焚身'
+      onlykiller: '[1] 被 [2] 烤熟了'
+      onlydamager: '[1] 在与 [3] 战斗时走入了火中'
+      both: '[1] 在与 [3] 战斗时被 [2] 烤熟了'
+    firetick:
+      nokiller: '[1] 被烧死了'
+      onlykiller: '[1] 被 [2] 烧死了'
+      onlydamager: '[1] 在与 [3] 战斗时被烤得酥脆'
+      both: '[1] 在与 [3] 战斗时被 [2] 烧死了'
+    flyintowall:
+      nokiller: '[1] 感受到了动能'
+      onlykiller: '[1] 被 [2] 撞死了'
+      onlydamager: '[1] 在试图逃离 [3] 时感受到了动能'
+      both: '[1] 在试图逃离 [3] 时被 [2] 撞死了'
+    freeze:
+      nokiller: '[1] 冻死了'
+      onlykiller: '[1] 被 [2] 冻死了'
+      onlydamager: '[1] 在与 [3] 战斗时被冻死了'
+      both: '[1] 在与 [3] 战斗时被 [2] 冻死了'
+    hotfloor:
+      nokiller: '[1] 发现了地板是岩浆'
+      onlykiller: '[1] 被 [2] 烫死了'
+      onlydamager: '[1] 因 [3] 而步入危险之地'
+      both: '[1] 在与 [3] 战斗时被 [2] 烫死了'
+    lava:
+      nokiller: '[1] 试图在岩浆里游泳'
+      onlykiller: '[1] 被 [2] 化成灰烬'
+      onlydamager: '[1] 在逃离 [3] 时试图在岩浆里游泳'
+      both: '[1] 在与 [3] 战斗时被 [2] 化成灰烬'
+    lightning:
+      nokiller: '[1] 被闪电击中'
+      onlykiller: '[1] 被 [2] 电死了'
+      onlydamager: '[1] 在与 [3] 战斗时被闪电击中'
+      both: '[1] 在与 [3] 战斗时被 [2] 电死了'
+    magic:
+      nokiller: '[1] 被魔法杀死了'
+      onlykiller: '[1] 被 [2] 使用的魔法杀死了'
+      onlydamager: '[1] 在试图逃离 [3] 时被魔法杀死了'
+      both: '[1] 在试图逃离 [3] 时被 [2] 使用的魔法杀死了'
+    melting:
+      nokiller: '[1] 融化了'
+      onlykiller: '[1] 被 [2] 融化了'
+      onlydamager: '[1] 在与 [3] 战斗时融化了'
+      both: '[1] 在与 [3] 战斗时被 [2] 融化了'
+    poison:
+      nokiller: '[1] 中毒身亡'
+      onlykiller: '[1] 被 [2] 毒死了'
+      onlydamager: '[1] 在试图逃离 [3] 时中毒身亡'
+      both: '[1] 在试图逃离 [3] 时被 [2] 毒死了'
+    projectile:
+      nokiller: '[1] 中箭而亡'
+      onlykiller: '[1] 被 [2] 射杀'
+      onlydamager: '[1] 在与 [3] 战斗时中箭而亡'
+      both: '[1] 在与 [3] 战斗时被 [2] 射杀'
+    sonicboom:
+      nokiller: '[1] 被一道音波尖啸抹除了'
+      onlykiller: '[1] 被 [2] 抹除了'
+      onlydamager: '[1] 在试图逃离 [3] 时被一道音波尖啸抹除了'
+      both: '[1] 在试图逃离 [3] 时被 [2] 抹除了'
+    starvation:
+      nokiller: '[1] 饿死了'
+      onlykiller: '[1] 被 [2] 饿死了'
+      onlydamager: '[1] 在与 [3] 战斗时饿死了'
+      both: '[1] 在与 [3] 战斗时被 [2] 饿死了'
+    suffocation:
+      nokiller: '[1] 在墙里窒息而亡'
+      onlykiller: '[1] 被 [2] 塞进了石头缝里'
+      onlydamager: '[1] 在与 [3] 战斗时在墙里窒息而亡'
+      both: '[1] 在与 [3] 战斗时被 [2] 塞进了石头缝里'
+    suicide:
+      nokiller: '[1] 自杀了'
+      onlykiller: '[1] 在与 [2] 战斗时自杀了'
+      onlydamager: '[1] 向 [3] 投降了'
+      both: '[1] 在向 [3] 投降时因 [2] 而自杀了'
+    thorns:
+      nokiller: '[1] 被反伤致死'
+      onlykiller: '[1] 在试图伤害 [2] 时被杀'
+      onlydamager: '[1] 在与 [3] 战斗时被反伤致死'
+      both: '[1] 在与 [3] 战斗时被 [2] 反伤致死'
+    void:
+      nokiller: '[1] 掉出了这个世界'
+      onlykiller: '[1] 被 [2] 扔出了这个世界'
+      onlydamager: '[1] 与 [3] 不共戴天'
+      both: '[1] 在与 [3] 战斗时被 [2] 扔出了这个世界'
+    wither:
+      nokiller: '[1] 凋谢了'
+      onlykiller: '[1] 被 [2] 凋零'
+      onlydamager: '[1] 在与 [3] 战斗时凋谢了'
+      both: '[1] 在与 [3] 战斗时被 [2] 凋零'
+
+# 定义坐标，和与坐标相关的时间的显示方式
+# 占位符 w世界名称，x y z坐标，p q仰角和水平视角
+# 注意此处的占位符不需要用包括中括号在内的任何符号包围
+location:
+  # 格式形式
+  format: '(w) [x, y, z]'
+  # 保留有效位数个数，这包括获取两点间的距离的有效位数
+  accuracy: 1
+  # 定义时间的显示方式
+  time: 'yyyy年M月d日 H:mm:ss'

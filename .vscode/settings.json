@@ -1,0 +1,12 @@
+{
+    "java.project.sourcePaths": ["src"],
+    "java.project.outputPath": "bin",
+    "java.project.referencedLibraries": [
+        "lib/**/*.jar",
+        "g:\\api\\spigot-api-1.19-R0.1-SNAPSHOT.jar",
+        "g:\\api\\Expansion-player.jar",
+        "g:\\api\\PlaceholderAPI-2.11.2.jar",
+        "g:\\api\\Expansion-server.jar",
+        "g:\\api\\ProtocolLib.jar"
+    ]
+}
