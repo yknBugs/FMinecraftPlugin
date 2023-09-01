@@ -1,10 +1,10 @@
 name: FPlugin
 main: com.ykn.fplugin.FPlugin
-version: 0.0.3
+version: 0.0.1
 api-version: 1.13
 author: ykn
 
-depend: [PlaceholderAPI, ProtocolLib]
+depend: [ProtocolLib]
 
 commands:
   f:
@@ -15,60 +15,4 @@ commands:
 
 permissions:
   fplugin.f:
-    default: true
-  fplugin.f.gui:
-    default: true
-  fplugin.f.devfunction:
-    default: true
-  fplugin.f.help:
-    default: true
-  fplugin.f.run:
-    default: true
-  fplugin.f.run.*:
-    default: true
-  fplugin.f.delay:
-    default: true
-  fplugin.f.delay.other:
-    default: true
-  fplugin.f.delay.console:
-    default: true
-  fplugin.f.delay.clear:
-    default: true
-  fplugin.f.message:
-    default: true
-  fplugin.f.message.unsafe:
-    default: true
-  fplugin.f.message.override:
-    default: true
-  fplugin.f.message.send:
-    default: true
-  fplugin.f.message.broadcast:
-    default: true
-  fplugin.f.message.remove:
-    default: true
-  fplugin.f.message.type.chat:
-    default: true
-  fplugin.f.message.type.bossbar:
-    default: true
-  fplugin.f.message.type.actionbar:
-    default: true
-  fplugin.f.back:
-    default: true
-  fplugin.mobdeathmessage.actionbar:
-    default: true
-  fplugin.mobdeathmessage.boss:
-    default: true
-  fplugin.mobdeathmessage.revenge:
-    default: true
-  fplugin.mobdeathmessage.custom:
-    default: true
-  fplugin.shootmessage.beingshoot:
-    default: true
-  fplugin.shootmessage.shootother:
-    default: true
-  fplugin.shootmessage.all:
-    default: true
-  fplugin.playerdeath.self:
-    default: true
-  fplugin.playerdeath.others:
     default: true
