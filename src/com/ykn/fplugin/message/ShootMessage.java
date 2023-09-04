@@ -49,31 +49,16 @@ public class ShootMessage extends PlaceholderMessage {
     @Override
     public String formatPlaceholders() {
         String outputMessage = this.message.replace('&', '\u00a7');
-        if (this.projectile != null) {
-            outputMessage = outputMessage.replace("[projectile]", Util.getEntityName(this.projectile));
-        } else {
-            outputMessage = outputMessage.replace("[projectile]", "Null");
-            this.isValid = false;
-        }
 
-        // 借用 formatDistance 功能来四舍五入
-        if (this.hitEntity != null) {
-            outputMessage = outputMessage.replace("[hitEntity]", Util.getEntityName(this.hitEntity));
-            if (this.hitEntity.isValid()) {
-                outputMessage = outputMessage.replace("[entityLocation]", LocationConfig.formatLocation(this.hitEntity.getLocation()));
-                outputMessage = outputMessage.replace("[entityHealth]", LocationConfig.formatDistance(this.hitEntity.getHealth()));
-            } else {
-                outputMessage = outputMessage.replace("[entityLocation]", "Invalid");
-                outputMessage = outputMessage.replace("[entityHealth]", "Invalid");
-                this.isValid = false;
-            }
+        if (this.shooter != null && this.hitEntity != null && this.shooter.isValid() && this.hitEntity.isValid()) {
+            outputMessage = outputMessage.replace("[distance]", LocationConfig.formatDistance(this.shooter.getLocation(), this.hitEntity.getLocation()));
         } else {
-            outputMessage = outputMessage.replace("[hitEntity]", "Null");
+            outputMessage = outputMessage.replace("[distance]", "Invalid");
             this.isValid = false;
         }
         
+        // 借用 formatDistance 功能来四舍五入
         if (this.shooter != null) {
-            outputMessage = outputMessage.replace("[shooter]", Util.getEntityName(this.shooter));
             if (this.shooter.isValid()) {
                 outputMessage = outputMessage.replace("[shooterLocation]", LocationConfig.formatLocation(this.shooter.getLocation()));
                 outputMessage = outputMessage.replace("[shooterHealth]", LocationConfig.formatDistance(this.shooter.getHealth()));
@@ -87,12 +72,36 @@ public class ShootMessage extends PlaceholderMessage {
             this.isValid = false;
         }
 
-        if (this.shooter != null && this.hitEntity != null && this.shooter.isValid() && this.hitEntity.isValid()) {
-            outputMessage = outputMessage.replace("[distance]", LocationConfig.formatDistance(this.shooter.getLocation(), this.hitEntity.getLocation()));
+        if (this.hitEntity != null) {
+            if (this.hitEntity.isValid()) {
+                outputMessage = outputMessage.replace("[entityLocation]", LocationConfig.formatLocation(this.hitEntity.getLocation()));
+                outputMessage = outputMessage.replace("[entityHealth]", LocationConfig.formatDistance(this.hitEntity.getHealth()));
+            } else {
+                outputMessage = outputMessage.replace("[entityLocation]", "Invalid");
+                outputMessage = outputMessage.replace("[entityHealth]", "Invalid");
+                this.isValid = false;
+            }
         } else {
-            outputMessage = outputMessage.replace("[distance]", "Invalid");
+            outputMessage = outputMessage.replace("[hitEntity]", "Null");
             this.isValid = false;
         }
+
+        // 不在上面就替换占位符是为了尽可能减少通过重命名实体以利用占位符注入获取信息的bug
+        if (this.shooter != null) {
+            outputMessage = outputMessage.replace("[shooter]", Util.getEntityName(this.shooter));
+        }
+
+        if (this.hitEntity != null) {
+            outputMessage = outputMessage.replace("[hitEntity]", Util.getEntityName(this.hitEntity));
+        }
+
+        if (this.projectile != null) {
+            outputMessage = outputMessage.replace("[projectile]", Util.getEntityName(this.projectile));
+        } else {
+            outputMessage = outputMessage.replace("[projectile]", "Null");
+            this.isValid = false;
+        }
+        // 重命名攻击者实体可能导致通过占位符注入的bug [不严重]
 
         return outputMessage;
     }

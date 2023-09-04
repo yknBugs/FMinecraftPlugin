@@ -60,7 +60,7 @@ deathmessage:
     onlykiller: '[entity] 被 [killer] 的龙息烤熟了'
     onlydamager: '[entity] 在与 [damager] 的战斗中被龙息烤熟了'
     both: '[entity] 在与 [damager] 的战斗中被 [killer] 的龙息烤熟了'
-  drowing: 
+  drowning: 
     nokiller: '[entity] 淹死了'
     onlykiller: '[entity] 被 [killer] 淹死了'
     onlydamager: '[entity] 在试图逃离 [damager] 时淹死了'

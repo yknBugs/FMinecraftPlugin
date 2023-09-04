@@ -17,6 +17,14 @@ public class Config {
         return thisPlugin.getConfig().getString("prefix", "\u00a7f").replace('&', '\u00a7');
     }
 
+    public static boolean isNoCustom() {
+        return thisPlugin.getConfig().getBoolean("nocustom", false);
+    }
+
+    public static boolean isIgnoreEntityName() {
+        return thisPlugin.getConfig().getBoolean("ignoreentityname", false);
+    }
+
     public static boolean isActiveShootMessage() {
         return thisPlugin.getConfig().getBoolean("shootmessage", true);
     }

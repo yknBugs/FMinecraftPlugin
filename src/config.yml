@@ -4,6 +4,12 @@ debug: true
 # 消息前缀
 prefix: '&d&lF &r&e> &e'
 
+# 禁止任何玩家输入的地方包含中括号，避免可能的利用占位符注入
+nocustom: false
+
+# 获取实体的名称时忽略命名牌命名后的名称
+ignoreentityname: false
+
 # 射箭消息
 shootmessage: true
 

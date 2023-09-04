@@ -6,6 +6,7 @@ import org.bukkit.Bukkit;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.Player;
 
+import com.ykn.fplugin.config.Config;
 import com.ykn.fplugin.data.PlayerData;
 import com.ykn.fplugin.data.ServerData;
 import com.ykn.fplugin.language.ConsoleLanguage;
@@ -29,7 +30,6 @@ public class Util {
             }
         }
     }
-
 
     /**
      * 往有权限的玩家发送 PersistentActionbar 消息
@@ -68,18 +68,20 @@ public class Util {
         }
     }
 
-    
     /**
      * 获取实体的名称，被重命名后的实体会返回重命名后的名称
      * @param entity 要获取名称的实体
      * @return 实体的名称
      */
     public static String getEntityName(Entity entity) {
-        if (entity.getCustomName() == null) {
+        if (entity.getCustomName() == null || Config.isIgnoreEntityName()) {
             return entity.getName();
-        } else {
-            return entity.getCustomName();
+        } 
+        String entityName = entity.getCustomName();
+        if (Config.isNoCustom()) {
+            entityName = entityName.replace('[', '(').replace(']', ')');
         }
+        return entityName;
     }
 
 }

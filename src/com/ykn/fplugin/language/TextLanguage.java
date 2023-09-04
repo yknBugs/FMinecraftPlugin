@@ -26,6 +26,7 @@ public class TextLanguage extends Language {
                 message = languageYML.getConfig().getString("deathmessage.unknownreason.nokiller", "[entity] 被杀死了");
             }
             message = message.replace('&', '\u00a7');
+            message = message.replace("[location]", LocationConfig.formatLocation(entity.getLocation()));
         } else if (killer == null && damager != null) {
             //无攻击者，有在战斗中的玩家，为 #1 在与 #3 的战斗中xxx
             message = languageYML.getConfig().getString("deathmessage." + damage + ".onlydamager");
@@ -34,6 +35,7 @@ public class TextLanguage extends Language {
                 message = languageYML.getConfig().getString("deathmessage.unknownreason.onlydamager", "[entity] 在与 [damager] 的战斗中被杀");
             }
             message = message.replace('&', '\u00a7');
+            message = message.replace("[location]", LocationConfig.formatLocation(entity.getLocation()));
             message = message.replace("[damager]", Util.getEntityName(damager));
         } else if (killer != null && damager == null) {
             //有攻击者，无在战斗中的玩家，为 #1 被 #2 xxx
@@ -43,6 +45,7 @@ public class TextLanguage extends Language {
                 message = languageYML.getConfig().getString("deathmessage.unknownreason.onlykiller", "[entity] 被 [killer] 杀死了");
             }
             message = message.replace('&', '\u00a7');
+            message = message.replace("[location]", LocationConfig.formatLocation(entity.getLocation()));
             message = message.replace("[killer]", Util.getEntityName(killer));
         } else if (killer != null && damager != null && killer != damager) {
             //两者都有但两者不一样，为 #1 在与 #3 的战斗中被 #2 xxx
@@ -52,6 +55,7 @@ public class TextLanguage extends Language {
                 message = languageYML.getConfig().getString("deathmessage.unknownreason.both", "[entity] 在与 [damager] 的战斗中被 [killer] 杀死了");
             }
             message = message.replace('&', '\u00a7');
+            message = message.replace("[location]", LocationConfig.formatLocation(entity.getLocation()));
             message = message.replace("[damager]", Util.getEntityName(damager));
             message = message.replace("[killer]", Util.getEntityName(killer));
         } else {
@@ -62,10 +66,11 @@ public class TextLanguage extends Language {
                 message = languageYML.getConfig().getString("deathmessage.unknownreason.onlykiller", "[entity] 被 [killer] 杀死了");
             }
             message = message.replace('&', '\u00a7');
+            message = message.replace("[location]", LocationConfig.formatLocation(entity.getLocation()));
             message = message.replace("[killer]", Util.getEntityName(killer));
         }
         message = message.replace("[entity]", Util.getEntityName(entity));
-        message = message.replace("[location]", LocationConfig.formatLocation(entity.getLocation()));
+        // 重命名攻击者实体可能导致通过占位符注入的bug [不严重]
 
         return message;
     }
