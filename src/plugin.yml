@@ -4,8 +4,6 @@ version: 0.0.1
 api-version: 1.13
 author: ykn
 
-depend: [ProtocolLib]
-
 commands:
   f:
     description: Open GUI with various function
@@ -16,3 +14,11 @@ commands:
 permissions:
   fplugin.f:
     default: true
+  fplugin.shootmessage:
+    default: true
+    children:
+      fplugin.shootmessage.hitother: true
+      fplugin.shootmessage.beinghit: op
+      fplugin.shootmessage.all: op
+
+  

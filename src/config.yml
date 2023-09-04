@@ -3,3 +3,20 @@ debug: true
 
 # 消息前缀
 prefix: '&d&lF &r&e> &e'
+
+# 射箭消息
+shootmessage: true
+
+# 定义坐标，和与坐标相关的时间的显示方式
+# 占位符 w世界名称，x y z坐标，p q仰角和水平视角
+# 注意此处的占位符不需要用包括中括号在内的任何符号包围
+location:
+  # 格式形式
+  format: '(w) [x, y, z]'
+  # 保留有效位数个数，这包括获取两点间的距离的有效位数
+  accuracy: 1
+  # 隐藏命名空间
+  hidenamespace: true
+
+# 定义时间的显示方式
+timeformat: 'yyyy年M月d日 H:mm:ss'

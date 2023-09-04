@@ -1,0 +1,10 @@
+console:
+  pluginenable: 'FPlugin 插件已启用'
+  plugindisable: 'FPlugin 插件已停用'
+  missingplayerdata: '缺少玩家 [player] 的数据，已为其重新生成数据'
+
+actionbar:
+  projectile:
+    hitother: '你击中了 [distance] 米外的 [hitEntity] (生命值: [entityHealth])'
+    beinghit: '你被 [shooter] 击中'
+    all: '[hitEntity] (生命值: [entityHealth]) 被 [shooter] 击中'
