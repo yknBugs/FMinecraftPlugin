@@ -7,15 +7,18 @@ public class PlaceholderMessage {
 
     public String message;
     public String permission;
+    public boolean isValid;
 
     public PlaceholderMessage() {
         this.permission = null;
         this.message = "";
+        this.isValid = true;
     }
 
     public PlaceholderMessage(String permission, String message) {
         this.permission = permission;
         this.message = message;
+        this.isValid = true;
     }
 
     /**

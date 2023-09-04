@@ -15,10 +15,16 @@ permissions:
   fplugin.f:
     default: true
   fplugin.shootmessage:
-    default: true
+    default: op
     children:
       fplugin.shootmessage.hitother: true
-      fplugin.shootmessage.beinghit: op
-      fplugin.shootmessage.all: op
+      fplugin.shootmessage.beinghit: true
+      fplugin.shootmessage.all: true
+  fplugin.shootmessage.hitother: 
+    default: true
+  fplugin.shootmessage.beinghit: 
+    default: op
+  fplugin.shootmessage.all: 
+    default: op
 
   

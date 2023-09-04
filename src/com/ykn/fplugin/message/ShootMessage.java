@@ -25,6 +25,13 @@ public class ShootMessage extends PlaceholderMessage {
     public LivingEntity hitEntity;
     public LivingEntity shooter;
 
+    public ShootMessage() {
+        super();
+        this.projectile = null;
+        this.hitEntity = null;
+        this.shooter = null;
+    }
+
     public ShootMessage(String permission, String message) {
         super(permission, message);
         this.projectile = null;
@@ -46,38 +53,45 @@ public class ShootMessage extends PlaceholderMessage {
             outputMessage = outputMessage.replace("[projectile]", Util.getEntityName(this.projectile));
         } else {
             outputMessage = outputMessage.replace("[projectile]", "Null");
+            this.isValid = false;
         }
 
+        // 借用 formatDistance 功能来四舍五入
         if (this.hitEntity != null) {
             outputMessage = outputMessage.replace("[hitEntity]", Util.getEntityName(this.hitEntity));
             if (this.hitEntity.isValid()) {
                 outputMessage = outputMessage.replace("[entityLocation]", LocationConfig.formatLocation(this.hitEntity.getLocation()));
-                outputMessage = outputMessage.replace("[entityHealth]", Double.toString(this.hitEntity.getHealth()));
+                outputMessage = outputMessage.replace("[entityHealth]", LocationConfig.formatDistance(this.hitEntity.getHealth()));
             } else {
                 outputMessage = outputMessage.replace("[entityLocation]", "Invalid");
                 outputMessage = outputMessage.replace("[entityHealth]", "Invalid");
+                this.isValid = false;
             }
         } else {
             outputMessage = outputMessage.replace("[hitEntity]", "Null");
+            this.isValid = false;
         }
         
         if (this.shooter != null) {
             outputMessage = outputMessage.replace("[shooter]", Util.getEntityName(this.shooter));
             if (this.shooter.isValid()) {
                 outputMessage = outputMessage.replace("[shooterLocation]", LocationConfig.formatLocation(this.shooter.getLocation()));
-                outputMessage = outputMessage.replace("[shooterHealth]", Double.toString(this.shooter.getHealth()));
+                outputMessage = outputMessage.replace("[shooterHealth]", LocationConfig.formatDistance(this.shooter.getHealth()));
             } else {
                 outputMessage = outputMessage.replace("[shooterLocation]", "Invalid");
                 outputMessage = outputMessage.replace("[shooterHealth]", "Invalid");
+                this.isValid = false;
             }
         } else {
             outputMessage = outputMessage.replace("[shooter]", "Null");
+            this.isValid = false;
         }
 
         if (this.shooter != null && this.hitEntity != null && this.shooter.isValid() && this.hitEntity.isValid()) {
             outputMessage = outputMessage.replace("[distance]", LocationConfig.formatDistance(this.shooter.getLocation(), this.hitEntity.getLocation()));
         } else {
             outputMessage = outputMessage.replace("[distance]", "Invalid");
+            this.isValid = false;
         }
 
         return outputMessage;

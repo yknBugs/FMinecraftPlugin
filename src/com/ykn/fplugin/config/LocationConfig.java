@@ -46,11 +46,10 @@ public class LocationConfig extends Config {
     public static String formatDistance(Location loc1, Location loc2) {
         int accuracy = thisPlugin.getConfig().getInt("location.accuracy", 1);
         double distance = 0.0;
-        try {
-            distance = loc1.distance(loc2);
-        } catch (IllegalArgumentException illegalArgumentException) {
+        if (loc1.getWorld() != loc2.getWorld()) {
             return "Cross Dimension";
         }
+        distance = loc1.distance(loc2);
         if (accuracy > 0) {
             return String.format("%." + accuracy + "f", distance);
         } else {

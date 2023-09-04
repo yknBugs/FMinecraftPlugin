@@ -13,7 +13,7 @@ public class PersistentMessage {
     /**
      * 消息显示的剩余时长
      */
-    public int tick;
+    public int time;
 
     /**
      * 要显示的消息的内容
@@ -22,13 +22,13 @@ public class PersistentMessage {
 
     public PersistentMessage() {
         this.delay = 1;
-        this.tick = 1;
+        this.time = 1;
         this.placeholderMessage = new PlaceholderMessage();
     }
 
     public PersistentMessage(int delay, int tick, PlaceholderMessage placeholderMessage) {
         this.delay = delay;
-        this.tick = tick;
+        this.time = tick;
         this.placeholderMessage = placeholderMessage;
     }
 
@@ -37,7 +37,7 @@ public class PersistentMessage {
      */
     public void tick() {
         if (this.delay <= 0) {
-            this.tick--;
+            this.time--;
         }
         this.delay--;
     }

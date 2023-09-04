@@ -58,7 +58,8 @@ public class ProjectileHit implements Listener {
                 playerData.joinTick = ServerData.tick;
                 ServerData.playerdata.put(player.getUniqueId(), playerData);
             }
-            playerData.persistentMessages.add(new PersistentMessage(0, 60, shootMessage));
+            // playerData.persistentMessages.add(new PersistentMessage(0, 60, shootMessage));
+            playerData.persistentMessage = new PersistentMessage(0, 60, shootMessage);
         }
     }
 

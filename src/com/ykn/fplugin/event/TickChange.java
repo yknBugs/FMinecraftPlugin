@@ -1,7 +1,6 @@
 package com.ykn.fplugin.event;
 
 import java.util.Collection;
-import java.util.Iterator;
 
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
@@ -10,7 +9,6 @@ import org.bukkit.scheduler.BukkitRunnable;
 import com.ykn.fplugin.config.Config;
 import com.ykn.fplugin.data.PlayerData;
 import com.ykn.fplugin.data.ServerData;
-import com.ykn.fplugin.message.PersistentMessage;
 
 import net.md_5.bungee.api.ChatMessageType;
 import net.md_5.bungee.api.chat.TextComponent;
@@ -30,27 +28,50 @@ public class TickChange extends BukkitRunnable {
     }
 
     private void showActionbarMessageToPlayer(Player player, PlayerData playerData) {
-        Iterator<PersistentMessage> iterator = playerData.persistentMessages.iterator();
-        String message = "";
-        while (iterator.hasNext()) {
-            PersistentMessage persistentMessage = iterator.next();
-            String permission = persistentMessage.placeholderMessage.permission;
-            if (persistentMessage.delay <= 0 && persistentMessage.tick <= 0) {
-                iterator.remove();
-                continue;
-            }
+        // Java 版 ActionBar 不能换行
+        // Iterator<PersistentMessage> iterator = playerData.persistentMessages.iterator();
+        // String message = "";
+        // while (iterator.hasNext()) {
+        //     PersistentMessage persistentMessage = iterator.next();
+        //     String permission = persistentMessage.placeholderMessage.permission;
+        //     if (persistentMessage.delay <= 0 && persistentMessage.tick <= 0) {
+        //         iterator.remove();
+        //         continue;
+        //     }
 
-            if (permission != null && !player.hasPermission(permission)) {
-                continue;
-            }
+        //     if (permission != null && !player.hasPermission(permission)) {
+        //         continue;
+        //     }
 
-            message = message + Config.getPrefix() + persistentMessage.placeholderMessage.formatPlaceholders() + "\n";
-            persistentMessage.tick();
+        //     message = message + Config.getPrefix() + persistentMessage.placeholderMessage.formatPlaceholders() + "\n";
+        //     persistentMessage.tick();
+        // }
+
+        // if (!playerData.persistentMessages.isEmpty()) {
+        //     player.spigot().sendMessage(ChatMessageType.ACTION_BAR, new TextComponent(message));
+        // }
+
+        if (playerData.persistentMessage == null) {
+            return;
+        }
+        String permission = playerData.persistentMessage.placeholderMessage.permission;
+        if (playerData.persistentMessage.delay <= 0 && playerData.persistentMessage.time <= 0) {
+            playerData.persistentMessage = null;
+            return;
         }
 
-        if (!playerData.persistentMessages.isEmpty()) {
-            player.spigot().sendMessage(ChatMessageType.ACTION_BAR, new TextComponent(message));
+        if (permission != null && !player.hasPermission(permission)) {
+            playerData.persistentMessage = null;
+            return;
         }
+
+        playerData.persistentMessage.tick();
+        String message = Config.getPrefix() + playerData.persistentMessage.placeholderMessage.formatPlaceholders();
+        if (!playerData.persistentMessage.placeholderMessage.isValid) {
+            playerData.persistentMessage = null;
+            return;
+        }
+        player.spigot().sendMessage(ChatMessageType.ACTION_BAR, new TextComponent(message));
     }
     
 }

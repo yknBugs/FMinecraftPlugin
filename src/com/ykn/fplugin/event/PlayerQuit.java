@@ -26,7 +26,8 @@ public class PlayerQuit implements Listener {
             ServerData.playerdata.put(player.getUniqueId(), playerData);
         }
         playerData.leaveTick = ServerData.tick;
-        playerData.persistentMessages.clear();
+        // playerData.persistentMessages.clear();
+        playerData.persistentMessage = null;
     }
     
 }

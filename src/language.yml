@@ -4,7 +4,17 @@ console:
   missingplayerdata: '缺少玩家 [player] 的数据，已为其重新生成数据'
 
 actionbar:
+  # 玩家射中生物显示的消息
+  # 可用占位符
+  # [projectile] 弹射物名称 <p>
+  # [hitEntity] 被击中的实体名称 <p>
+  # [entityLocation] 被击中的实体坐标 <p>
+  # [entityHealth] 被击中的实体生命值 <p>
+  # [shooter] 攻击者名称 <p>
+  # [shooterLocation] 攻击者坐标 <p>
+  # [shooterHealth] 攻击者生命值 <p>
+  # [distance] 攻击者和被攻击者的距离 <p>
   projectile:
     hitother: '你击中了 [distance] 米外的 [hitEntity] (生命值: [entityHealth])'
     beinghit: '你被 [shooter] 击中'
-    all: '[hitEntity] (生命值: [entityHealth]) 被 [shooter] 击中'
+    all: '位于 [entityLocation] 的 [hitEntity] (生命值: [entityHealth]) 被 [shooter] 击中'
