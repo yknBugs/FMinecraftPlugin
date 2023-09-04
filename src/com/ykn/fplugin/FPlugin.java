@@ -9,6 +9,7 @@ import org.bukkit.scheduler.BukkitTask;
 
 import com.ykn.fplugin.config.Config;
 import com.ykn.fplugin.config.ConfigAccessor;
+import com.ykn.fplugin.event.EntityDeath;
 import com.ykn.fplugin.event.PlayerJoin;
 import com.ykn.fplugin.event.PlayerQuit;
 import com.ykn.fplugin.event.ProjectileHit;
@@ -37,7 +38,7 @@ public class FPlugin extends JavaPlugin {
 
         //注册事件
         this.tickTask = new TickChange().runTaskTimer(this, 0, 1);
-        // this.getServer().getPluginManager().registerEvents(new EntityDeath(), this);
+        this.getServer().getPluginManager().registerEvents(new EntityDeath(), this);
         // this.getServer().getPluginManager().registerEvents(new InventoryClick(), this);
         // this.getServer().getPluginManager().registerEvents(new InventoryClose(), this);
         this.getServer().getPluginManager().registerEvents(new PlayerJoin(), this);

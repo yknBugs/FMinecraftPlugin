@@ -25,4 +25,28 @@ public class Config {
         String result = thisPlugin.getConfig().getString("timeformat", "yyyy年M月d日 H:mm:ss");
         return time.format(DateTimeFormatter.ofPattern(result));
     }
+
+    public static boolean isActiveEntityDeathMessage() {
+        return thisPlugin.getConfig().getBoolean("deathmessage.active", true);
+    }
+
+    public static int getHealthRegardedAsBoss() {
+        return thisPlugin.getConfig().getInt("deathmessage.health", 150);
+    }
+
+    public static boolean isShowBossDeathMessage() {
+        return thisPlugin.getConfig().getBoolean("deathmessage.boss", true);
+    }
+
+    public static boolean isShowRevengeDeathMessage() {
+        return thisPlugin.getConfig().getBoolean("deathmessage.revenge", true);
+    }
+
+    public static String getEntityKillerTag() {
+        return thisPlugin.getConfig().getString("deathmessage.revengetag", "killer");
+    }
+
+    public static boolean isShowRenamedDeathMessage() {
+        return thisPlugin.getConfig().getBoolean("deathmessage.renamed", true);
+    }
 }

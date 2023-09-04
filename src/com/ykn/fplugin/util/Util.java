@@ -6,6 +6,11 @@ import org.bukkit.Bukkit;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.Player;
 
+import com.ykn.fplugin.data.PlayerData;
+import com.ykn.fplugin.data.ServerData;
+import com.ykn.fplugin.language.ConsoleLanguage;
+import com.ykn.fplugin.message.PersistentMessage;
+
 import net.md_5.bungee.api.ChatMessageType;
 import net.md_5.bungee.api.chat.TextComponent;
 
@@ -21,6 +26,44 @@ public class Util {
         for (Player player : players) {
             if (player.hasPermission(permission)) {
                 player.spigot().sendMessage(ChatMessageType.ACTION_BAR, new TextComponent(message));
+            }
+        }
+    }
+
+
+    /**
+     * 往有权限的玩家发送 PersistentActionbar 消息
+     * @param message 要发送的消息的内容
+     */
+    public static void sendPersistentMessageToLimit(PersistentMessage message) {
+        Collection<? extends Player> players = Bukkit.getServer().getOnlinePlayers();
+        for (Player player : players) {
+            if (!player.hasPermission(message.placeholderMessage.permission)) {
+                continue;
+            }
+
+            PlayerData playerData = ServerData.playerdata.get(player.getUniqueId());
+            if (playerData == null) {
+                ConsoleLanguage.sendMissingPlayerDataWarning(player);
+                playerData = new PlayerData();
+                playerData.uuid = player.getUniqueId();
+                playerData.joinTick = ServerData.tick;
+                ServerData.playerdata.put(player.getUniqueId(), playerData);
+            }
+            playerData.persistentMessage = message;
+        }
+    }
+
+    /**
+     * 往有权限的玩家发送聊天消息
+     * @param permission 权限
+     * @param message 要发送的消息的内容
+     */
+    public static void sendTextMessageToLimit(String permission, String message) {
+        Collection<? extends Player> players = Bukkit.getServer().getOnlinePlayers();
+        for (Player player : players) {
+            if (player.hasPermission(permission)) {
+                player.sendMessage(message);
             }
         }
     }

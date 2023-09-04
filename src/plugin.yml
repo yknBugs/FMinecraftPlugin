@@ -26,5 +26,20 @@ permissions:
     default: op
   fplugin.shootmessage.all: 
     default: op
+  fplugin.deathmessage:
+    default: op
+    children:
+      fplugin.deathmessage.all: true
+      fplugin.deathmessage.renamed: true
+      fplugin.deathmessage.boss: true
+      fplugin.deathmessage.revenge: true
+  fplugin.deathmessage.all:
+    default: op
+  fplugin.deathmessage.renamed:
+    default: true
+  fplugin.deathmessage.boss:
+    default: true
+  fplugin.deathmessage.revenge:
+    default: true
 
   

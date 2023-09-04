@@ -50,6 +50,10 @@ public class ProjectileHit implements Listener {
                 message = ActionbarLanguage.getShootAllMessage();
                 shootMessage = new ShootMessage("fplugin.shootmessage.all", message, projectile, hitEntity, shooter);
             }
+
+            if (!player.hasPermission(shootMessage.permission)) {
+                continue;
+            }
             PlayerData playerData = ServerData.playerdata.get(player.getUniqueId());
             if (playerData == null) {
                 ConsoleLanguage.sendMissingPlayerDataWarning(player);
@@ -59,7 +63,7 @@ public class ProjectileHit implements Listener {
                 ServerData.playerdata.put(player.getUniqueId(), playerData);
             }
             // playerData.persistentMessages.add(new PersistentMessage(0, 60, shootMessage));
-            playerData.persistentMessage = new PersistentMessage(0, 60, shootMessage);
+            playerData.persistentMessage = new PersistentMessage(0, 100, shootMessage);
         }
     }
 

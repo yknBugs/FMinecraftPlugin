@@ -56,12 +56,14 @@ public class TickChange extends BukkitRunnable {
         }
         String permission = playerData.persistentMessage.placeholderMessage.permission;
         if (playerData.persistentMessage.delay <= 0 && playerData.persistentMessage.time <= 0) {
+            player.spigot().sendMessage(ChatMessageType.ACTION_BAR, new TextComponent(" "));
             playerData.persistentMessage = null;
             return;
         }
 
         if (permission != null && !player.hasPermission(permission)) {
             playerData.persistentMessage = null;
+            player.spigot().sendMessage(ChatMessageType.ACTION_BAR, new TextComponent(" "));
             return;
         }
 
@@ -69,6 +71,7 @@ public class TickChange extends BukkitRunnable {
         String message = Config.getPrefix() + playerData.persistentMessage.placeholderMessage.formatPlaceholders();
         if (!playerData.persistentMessage.placeholderMessage.isValid) {
             playerData.persistentMessage = null;
+            player.spigot().sendMessage(ChatMessageType.ACTION_BAR, new TextComponent(" "));
             return;
         }
         player.spigot().sendMessage(ChatMessageType.ACTION_BAR, new TextComponent(message));

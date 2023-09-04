@@ -3,18 +3,185 @@ console:
   plugindisable: 'FPlugin 插件已停用'
   missingplayerdata: '缺少玩家 [player] 的数据，已为其重新生成数据'
 
+  addkillertag: '给 [entity] 添加 [tag] 标签'
+  nodeathreason: '[entity] 因为 [reason] 死亡，但并未在配置文件中找到对应的消息内容'
+
 actionbar:
   # 玩家射中生物显示的消息
   # 可用占位符
-  # [projectile] 弹射物名称 <p>
-  # [hitEntity] 被击中的实体名称 <p>
-  # [entityLocation] 被击中的实体坐标 <p>
-  # [entityHealth] 被击中的实体生命值 <p>
-  # [shooter] 攻击者名称 <p>
-  # [shooterLocation] 攻击者坐标 <p>
-  # [shooterHealth] 攻击者生命值 <p>
-  # [distance] 攻击者和被攻击者的距离 <p>
+  # [projectile] 弹射物名称
+  # [hitEntity] 被击中的实体名称
+  # [entityLocation] 被击中的实体坐标
+  # [entityHealth] 被击中的实体生命值
+  # [shooter] 攻击者名称
+  # [shooterLocation] 攻击者坐标
+  # [shooterHealth] 攻击者生命值
+  # [distance] 攻击者和被攻击者的距离
   projectile:
     hitother: '你击中了 [distance] 米外的 [hitEntity] (生命值: [entityHealth])'
     beinghit: '你被 [shooter] 击中'
     all: '位于 [entityLocation] 的 [hitEntity] (生命值: [entityHealth]) 被 [shooter] 击中'
+
+# 生物死亡消息
+# 可用占位符
+# [entity] 死亡的生物
+# [killer] 对死者造成最后致命一击的实体
+# [damager] 在死者死亡前的一小段时间内对其造成过伤害的玩家
+# [location] 死亡坐标
+deathmessage:
+  noreason: '[entity] 死了'
+  unknownreason: 
+    nokiller: '[entity] 被杀死了'
+    onlykiller: '[entity] 被 [killer] 杀死了'
+    onlydamager: '[entity] 在与 [damager] 的战斗中被杀'
+    both: '[entity] 在与 [damager] 的战斗中被 [killer] 杀死了'
+  blockexplosion: 
+    nokiller: '[entity] 爆炸了'
+    onlykiller: '[entity] 被 [killer] 炸死了'
+    onlydamager: '[entity] 在与 [damager] 的战斗中爆炸了'
+    both: '[entity] 在与 [damager] 的战斗中被 [killer] 炸死了'
+  contact: 
+    nokiller: '[entity] 被戳死了'
+    onlykiller: '[entity] 被 [killer] 戳死了'
+    onlydamager: '[entity] 在与 [damager] 的战斗被戳死了'
+    both: '[entity] 在与 [damager] 的战斗中被 [killer] 戳死了'
+  cramming: 
+    nokiller: '[entity] 因过度挤压而死'
+    onlykiller: '[entity] 被 [killer] 挤扁了'
+    onlydamager: '[entity] 在与 [damager] 的战斗因过度挤压而死'
+    both: '[entity] 在与 [damager] 的战斗中被 [killer] 挤扁了'
+  custom: 
+    nokiller: '[entity] 死了'
+    onlykiller: '[entity] 被 [killer] 打死了'
+    onlydamager: '[entity] 在与 [damager] 的战斗中死了'
+    both: '[entity] 在与 [damager] 的战斗中被 [killer] 打死了'
+  dragonbreath: 
+    nokiller: '[entity] 被龙息烤熟了'
+    onlykiller: '[entity] 被 [killer] 的龙息烤熟了'
+    onlydamager: '[entity] 在与 [damager] 的战斗中被龙息烤熟了'
+    both: '[entity] 在与 [damager] 的战斗中被 [killer] 的龙息烤熟了'
+  drowing: 
+    nokiller: '[entity] 淹死了'
+    onlykiller: '[entity] 被 [killer] 淹死了'
+    onlydamager: '[entity] 在试图逃离 [damager] 时淹死了'
+    both: '[entity] 在试图逃离 [damager] 时被 [killer] 淹死了'
+  dryout: 
+    nokiller: '[entity] 脱水了'
+    onlykiller: '[entity] 被 [killer] 榨干了'
+    onlydamager: '[entity] 在试图逃离 [damager] 时脱水而死'
+    both: '[entity] 在试图逃离 [damager] 时被 [killer] 榨干了'
+  entityattack: 
+    nokiller: '[entity] 被杀死了'
+    onlykiller: '[entity] 被 [killer] 杀死了'
+    onlydamager: '[entity] 在试图逃离 [damager] 时被杀死了'
+    both: '[entity] 在试图逃离 [damager] 时被 [killer] 杀死了'
+  entityexplosion: 
+    nokiller: '[entity] 爆炸了'
+    onlykiller: '[entity] 被 [killer] 炸死了'
+    onlydamager: '[entity] 在试图逃离 [damager] 时爆炸了'
+    both: '[entity] 在试图逃离 [damager] 时被 [killer] 炸死了'
+  entitysweepattack:
+    nokiller: '[entity] 被横扫攻击击杀'
+    onlykiller: '[entity] 被 [killer] 用横扫攻击击杀'
+    onlydamager: '[entity] 在试图逃离 [damager] 时被横扫攻击击杀'
+    both: '[entity] 在试图逃离 [damager] 时被 [killer] 用横扫攻击击杀'
+  fall:
+    nokiller: '[entity] 从高处摔了下来'
+    onlykiller: '[entity] 被 [killer] 击落'
+    onlydamager: '[entity] 因为 [damager] 注定要摔死'
+    both: '[entity] 在试图逃离 [damager] 时被 [killer] 击落'
+  fallingblock:
+    nokiller: '[entity] 被压扁了'
+    onlykiller: '[entity] 被 [killer] 压扁了'
+    onlydamager: '[entity] 在与 [damager] 战斗时被压扁了'
+    both: '[entity] 在与 [damager] 战斗时被 [killer] 压扁了'
+  fire: 
+    nokiller: '[entity] 浴火焚身'
+    onlykiller: '[entity] 被 [killer] 烤熟了'
+    onlydamager: '[entity] 在与 [damager] 战斗时走入了火中'
+    both: '[entity] 在与 [damager] 战斗时被 [killer] 烤熟了'
+  firetick:
+    nokiller: '[entity] 被烧死了'
+    onlykiller: '[entity] 被 [killer] 烧死了'
+    onlydamager: '[entity] 在与 [damager] 战斗时被烤得酥脆'
+    both: '[entity] 在与 [damager] 战斗时被 [killer] 烧死了'
+  flyintowall:
+    nokiller: '[entity] 感受到了动能'
+    onlykiller: '[entity] 被 [killer] 撞死了'
+    onlydamager: '[entity] 在试图逃离 [damager] 时感受到了动能'
+    both: '[entity] 在试图逃离 [damager] 时被 [killer] 撞死了'
+  freeze:
+    nokiller: '[entity] 冻死了'
+    onlykiller: '[entity] 被 [killer] 冻死了'
+    onlydamager: '[entity] 在与 [damager] 战斗时被冻死了'
+    both: '[entity] 在与 [damager] 战斗时被 [killer] 冻死了'
+  hotfloor:
+    nokiller: '[entity] 发现了地板是岩浆'
+    onlykiller: '[entity] 被 [killer] 烫死了'
+    onlydamager: '[entity] 因 [damager] 而步入危险之地'
+    both: '[entity] 在与 [damager] 战斗时被 [killer] 烫死了'
+  lava:
+    nokiller: '[entity] 试图在岩浆里游泳'
+    onlykiller: '[entity] 被 [killer] 化成灰烬'
+    onlydamager: '[entity] 在逃离 [damager] 时试图在岩浆里游泳'
+    both: '[entity] 在与 [damager] 战斗时被 [killer] 化成灰烬'
+  lightning:
+    nokiller: '[entity] 被闪电击中'
+    onlykiller: '[entity] 被 [killer] 电死了'
+    onlydamager: '[entity] 在与 [damager] 战斗时被闪电击中'
+    both: '[entity] 在与 [damager] 战斗时被 [killer] 电死了'
+  magic:
+    nokiller: '[entity] 被魔法杀死了'
+    onlykiller: '[entity] 被 [killer] 使用的魔法杀死了'
+    onlydamager: '[entity] 在试图逃离 [damager] 时被魔法杀死了'
+    both: '[entity] 在试图逃离 [damager] 时被 [killer] 使用的魔法杀死了'
+  melting:
+    nokiller: '[entity] 融化了'
+    onlykiller: '[entity] 被 [killer] 融化了'
+    onlydamager: '[entity] 在与 [damager] 战斗时融化了'
+    both: '[entity] 在与 [damager] 战斗时被 [killer] 融化了'
+  poison:
+    nokiller: '[entity] 中毒身亡'
+    onlykiller: '[entity] 被 [killer] 毒死了'
+    onlydamager: '[entity] 在试图逃离 [damager] 时中毒身亡'
+    both: '[entity] 在试图逃离 [damager] 时被 [killer] 毒死了'
+  projectile:
+    nokiller: '[entity] 中箭而亡'
+    onlykiller: '[entity] 被 [killer] 射杀'
+    onlydamager: '[entity] 在与 [damager] 战斗时中箭而亡'
+    both: '[entity] 在与 [damager] 战斗时被 [killer] 射杀'
+  sonicboom:
+    nokiller: '[entity] 被一道音波尖啸抹除了'
+    onlykiller: '[entity] 被 [killer] 抹除了'
+    onlydamager: '[entity] 在试图逃离 [damager] 时被一道音波尖啸抹除了'
+    both: '[entity] 在试图逃离 [damager] 时被 [killer] 抹除了'
+  starvation:
+    nokiller: '[entity] 饿死了'
+    onlykiller: '[entity] 被 [killer] 饿死了'
+    onlydamager: '[entity] 在与 [damager] 战斗时饿死了'
+    both: '[entity] 在与 [damager] 战斗时被 [killer] 饿死了'
+  suffocation:
+    nokiller: '[entity] 在墙里窒息而亡'
+    onlykiller: '[entity] 被 [killer] 塞进了石头缝里'
+    onlydamager: '[entity] 在与 [damager] 战斗时在墙里窒息而亡'
+    both: '[entity] 在与 [damager] 战斗时被 [killer] 塞进了石头缝里'
+  suicide:
+    nokiller: '[entity] 自杀了'
+    onlykiller: '[entity] 在与 [killer] 战斗时自杀了'
+    onlydamager: '[entity] 向 [damager] 投降了'
+    both: '[entity] 在向 [damager] 投降时因 [killer] 而自杀了'
+  thorns:
+    nokiller: '[entity] 被反伤致死'
+    onlykiller: '[entity] 在试图伤害 [killer] 时被杀'
+    onlydamager: '[entity] 在与 [damager] 战斗时被反伤致死'
+    both: '[entity] 在与 [damager] 战斗时被 [killer] 反伤致死'
+  void:
+    nokiller: '[entity] 掉出了这个世界'
+    onlykiller: '[entity] 被 [killer] 扔出了这个世界'
+    onlydamager: '[entity] 与 [damager] 不共戴天'
+    both: '[entity] 在与 [damager] 战斗时被 [killer] 扔出了这个世界'
+  wither:
+    nokiller: '[entity] 凋谢了'
+    onlykiller: '[entity] 被 [killer] 凋零'
+    onlydamager: '[entity] 在与 [damager] 战斗时凋谢了'
+    both: '[entity] 在与 [damager] 战斗时被 [killer] 凋零'
