@@ -28,29 +28,6 @@ public class TickChange extends BukkitRunnable {
     }
 
     private void showActionbarMessageToPlayer(Player player, PlayerData playerData) {
-        // Java 版 ActionBar 不能换行
-        // Iterator<PersistentMessage> iterator = playerData.persistentMessages.iterator();
-        // String message = "";
-        // while (iterator.hasNext()) {
-        //     PersistentMessage persistentMessage = iterator.next();
-        //     String permission = persistentMessage.placeholderMessage.permission;
-        //     if (persistentMessage.delay <= 0 && persistentMessage.tick <= 0) {
-        //         iterator.remove();
-        //         continue;
-        //     }
-
-        //     if (permission != null && !player.hasPermission(permission)) {
-        //         continue;
-        //     }
-
-        //     message = message + Config.getPrefix() + persistentMessage.placeholderMessage.formatPlaceholders() + "\n";
-        //     persistentMessage.tick();
-        // }
-
-        // if (!playerData.persistentMessages.isEmpty()) {
-        //     player.spigot().sendMessage(ChatMessageType.ACTION_BAR, new TextComponent(message));
-        // }
-
         if (playerData.persistentMessage == null) {
             return;
         }

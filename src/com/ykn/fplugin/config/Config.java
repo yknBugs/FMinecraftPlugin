@@ -26,7 +26,11 @@ public class Config {
     }
 
     public static boolean isActiveShootMessage() {
-        return thisPlugin.getConfig().getBoolean("shootmessage", true);
+        return thisPlugin.getConfig().getBoolean("shootmessage.active", true);
+    }
+
+    public static int getShootMessagePriority() {
+        return thisPlugin.getConfig().getInt("shootmessage.priority", 0);
     }
 
     public static String formatTime(LocalDateTime time) {
@@ -36,6 +40,10 @@ public class Config {
 
     public static boolean isActiveEntityDeathMessage() {
         return thisPlugin.getConfig().getBoolean("deathmessage.active", true);
+    }
+
+    public static int getEntityDeathMessagePriority() {
+        return thisPlugin.getConfig().getInt("deathmessage.priority", 0);
     }
 
     public static int getHealthRegardedAsBoss() {

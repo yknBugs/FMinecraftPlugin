@@ -13,12 +13,10 @@ import org.bukkit.event.entity.ProjectileHitEvent;
 import org.bukkit.projectiles.ProjectileSource;
 
 import com.ykn.fplugin.config.Config;
-import com.ykn.fplugin.data.PlayerData;
-import com.ykn.fplugin.data.ServerData;
 import com.ykn.fplugin.language.ActionbarLanguage;
-import com.ykn.fplugin.language.ConsoleLanguage;
 import com.ykn.fplugin.message.PersistentMessage;
 import com.ykn.fplugin.message.ShootMessage;
+import com.ykn.fplugin.util.Util;
 
 public class ProjectileHit implements Listener {
     
@@ -51,19 +49,7 @@ public class ProjectileHit implements Listener {
                 shootMessage = new ShootMessage("fplugin.shootmessage.all", message, projectile, hitEntity, shooter);
             }
 
-            if (!player.hasPermission(shootMessage.permission)) {
-                continue;
-            }
-            PlayerData playerData = ServerData.playerdata.get(player.getUniqueId());
-            if (playerData == null) {
-                ConsoleLanguage.sendMissingPlayerDataWarning(player);
-                playerData = new PlayerData();
-                playerData.uuid = player.getUniqueId();
-                playerData.joinTick = ServerData.tick;
-                ServerData.playerdata.put(player.getUniqueId(), playerData);
-            }
-            // playerData.persistentMessages.add(new PersistentMessage(0, 60, shootMessage));
-            playerData.persistentMessage = new PersistentMessage(0, 100, shootMessage);
+            Util.replaceActionbarPersistentMessage(player, new PersistentMessage(0, 100, Config.getShootMessagePriority(), shootMessage));
         }
     }
 

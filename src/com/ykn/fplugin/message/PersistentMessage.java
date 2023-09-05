@@ -16,9 +16,17 @@ public class PersistentMessage {
     public int time;
 
     /**
+     * 消息显示的优先级 <p>
+     * 高优先级的消息会覆盖掉低优先级的消息强制显示 <p>
+     * 正在显示高优先级的消息时，无法显示低优先级的消息 <p>
+     * 优先级相同的消息，优先显示后产生从消息
+     */
+    public int priority;
+
+    /**
      * 要显示的消息的内容
      */
-    public PlaceholderMessage placeholderMessage; 
+    public PlaceholderMessage placeholderMessage;
 
     public PersistentMessage() {
         this.delay = 1;
@@ -26,9 +34,10 @@ public class PersistentMessage {
         this.placeholderMessage = new PlaceholderMessage();
     }
 
-    public PersistentMessage(int delay, int tick, PlaceholderMessage placeholderMessage) {
+    public PersistentMessage(int delay, int tick, int priority, PlaceholderMessage placeholderMessage) {
         this.delay = delay;
         this.time = tick;
+        this.priority = priority;
         this.placeholderMessage = placeholderMessage;
     }
 

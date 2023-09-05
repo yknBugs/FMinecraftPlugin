@@ -72,7 +72,8 @@ public class EntityDeath implements Listener {
         }
 
         Language.log(4, message);
-        PersistentMessage persistentMessage = new PersistentMessage(0, 200, new PlaceholderMessage("fplugin.deathmessage.all", message));
+        PlaceholderMessage placeholderMessage = new PlaceholderMessage("fplugin.deathmessage.all", message);
+        PersistentMessage persistentMessage = new PersistentMessage(0, 200, Config.getEntityDeathMessagePriority(), placeholderMessage);
         Util.sendPersistentMessageToLimit(persistentMessage);
     }
 

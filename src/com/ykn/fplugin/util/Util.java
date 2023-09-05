@@ -38,19 +38,7 @@ public class Util {
     public static void sendPersistentMessageToLimit(PersistentMessage message) {
         Collection<? extends Player> players = Bukkit.getServer().getOnlinePlayers();
         for (Player player : players) {
-            if (!player.hasPermission(message.placeholderMessage.permission)) {
-                continue;
-            }
-
-            PlayerData playerData = ServerData.playerdata.get(player.getUniqueId());
-            if (playerData == null) {
-                ConsoleLanguage.sendMissingPlayerDataWarning(player);
-                playerData = new PlayerData();
-                playerData.uuid = player.getUniqueId();
-                playerData.joinTick = ServerData.tick;
-                ServerData.playerdata.put(player.getUniqueId(), playerData);
-            }
-            playerData.persistentMessage = message;
+            replaceActionbarPersistentMessage(player, message);
         }
     }
 
@@ -82,6 +70,28 @@ public class Util {
             entityName = entityName.replace('[', '(').replace(']', ')');
         }
         return entityName;
+    }
+
+    /**
+     * 尝试替换掉现在正在显示在 Actionbar 上的持续性消息
+     * @param player 玩家
+     * @param persistentMessage 替换后的消息
+     */
+    public static void replaceActionbarPersistentMessage(Player player, PersistentMessage persistentMessage) {
+        if (!player.hasPermission(persistentMessage.placeholderMessage.permission)) {
+            return;
+        }
+        PlayerData playerData = ServerData.playerdata.get(player.getUniqueId());
+        if (playerData == null) {
+            ConsoleLanguage.sendMissingPlayerDataWarning(player);
+            playerData = new PlayerData();
+            playerData.uuid = player.getUniqueId();
+            playerData.joinTick = ServerData.tick;
+            ServerData.playerdata.put(player.getUniqueId(), playerData);
+        }
+        if (playerData.persistentMessage == null || playerData.persistentMessage.priority <= persistentMessage.priority) {
+            playerData.persistentMessage = persistentMessage;
+        }   
     }
 
 }

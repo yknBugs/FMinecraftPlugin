@@ -11,7 +11,10 @@ nocustom: false
 ignoreentityname: false
 
 # 射箭消息
-shootmessage: true
+shootmessage: 
+  active: true
+  # 消息显示的优先级
+  priority: 0
 
 # 死亡消息
 deathmessage:
@@ -26,6 +29,8 @@ deathmessage:
   revengetag: 'killer'
   # 杀死有自定义名称或者重命名后的生物是否将消息显示在聊天栏上
   renamed: true
+  # 消息显示的优先级
+  priority: 0
 
 # 定义坐标，和与坐标相关的时间的显示方式
 # 占位符 w世界名称，x y z坐标，p q仰角和水平视角
