@@ -27,7 +27,8 @@ public class EntityDeath implements Listener {
     public void onEntityDeath(EntityDeathEvent entityDeathEvent) {
         if (entityDeathEvent.getEntity() instanceof Player) {
             this.tagKiller(entityDeathEvent.getEntity().getLastDamageCause());
-        } else if (Config.isActiveEntityDeathMessage()) {
+        } 
+        if (Config.isActiveEntityDeathMessage()) {
             this.showEntityDeathMessage(entityDeathEvent.getEntity());
         }
         
@@ -47,8 +48,16 @@ public class EntityDeath implements Listener {
         String message = TextLanguage.getDeathMessage(entity, killer, damager, damageCause);
 
         // 根据情况确定死亡消息显示的位置
+        // 玩家
+        if (Config.isShowPlayerDeathMessage() && entity instanceof Player) {
+            Language.log(3, message);
+            message = Config.getPrefix() + message;
+            Util.sendTextMessageToLimit((Player) entity, "fplugin.deathmessage.player", "fplugin.deathmessage.allplayer", message);
+            return;
+        }
+
         // 重命名实体
-        if (entity.getCustomName() != null && Config.isShowRenamedDeathMessage()) {
+        if (Config.isShowRenamedDeathMessage() && entity.getCustomName() != null) {
             Language.log(3, message);
             message = Config.getPrefix() + message;
             Util.sendTextMessageToLimit("fplugin.deathmessage.renamed", message);
@@ -56,7 +65,7 @@ public class EntityDeath implements Listener {
         }
 
         // boss
-        if (entity.getAttribute(Attribute.GENERIC_MAX_HEALTH).getValue() > Config.getHealthRegardedAsBoss() && Config.isShowBossDeathMessage()) {
+        if (Config.isShowBossDeathMessage() && entity.getAttribute(Attribute.GENERIC_MAX_HEALTH).getValue() > Config.getHealthRegardedAsBoss()) {
             Language.log(3, message);
             message = Config.getPrefix() + message;
             Util.sendTextMessageToLimit("fplugin.deathmessage.boss", message);
@@ -64,17 +73,22 @@ public class EntityDeath implements Listener {
         }
 
         // 复仇
-        if (entity.getScoreboardTags().contains(Config.getEntityKillerTag()) && Config.isShowRevengeDeathMessage()) {
+        if (Config.isShowRevengeDeathMessage() && entity.getScoreboardTags().contains(Config.getEntityKillerTag())) {
             Language.log(3, message);
             message = Config.getPrefix() + message;
             Util.sendTextMessageToLimit("fplugin.deathmessage.revenge", message);
             return;
         }
 
-        Language.log(4, message);
-        PlaceholderMessage placeholderMessage = new PlaceholderMessage("fplugin.deathmessage.all", message);
-        PersistentMessage persistentMessage = new PersistentMessage(0, 200, Config.getEntityDeathMessagePriority(), placeholderMessage);
-        Util.sendPersistentMessageToLimit(persistentMessage);
+        // 生物
+        if (Config.isShowAllDeathMessage()) {
+            Language.log(4, message);
+            PlaceholderMessage placeholderMessage = new PlaceholderMessage("fplugin.deathmessage.all", message);
+            PersistentMessage persistentMessage = new PersistentMessage(0, 200, Config.getEntityDeathMessagePriority(), placeholderMessage);
+            Util.sendPersistentMessageToLimit(persistentMessage);
+            return;
+        }
+        
     }
 
     /**

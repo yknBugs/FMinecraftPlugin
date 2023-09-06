@@ -29,6 +29,10 @@ deathmessage:
   revengetag: 'killer'
   # 杀死有自定义名称或者重命名后的生物是否将消息显示在聊天栏上
   renamed: true
+  # 杀死除玩家外的所有生物是否将消息显示在 Actionbar 上
+  all: true
+  # 杀死玩家的死亡消息是否显示
+  player: true
   # 消息显示的优先级
   priority: 0
 

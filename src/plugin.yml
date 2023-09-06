@@ -33,6 +33,8 @@ permissions:
       fplugin.deathmessage.renamed: true
       fplugin.deathmessage.boss: true
       fplugin.deathmessage.revenge: true
+      fplugin.deathmessage.player: true
+      fplugin.deathmessage.allplayer: true
   fplugin.deathmessage.all:
     default: op
   fplugin.deathmessage.renamed:
@@ -41,5 +43,9 @@ permissions:
     default: true
   fplugin.deathmessage.revenge:
     default: true
+  fplugin.deathmessage.player:
+    default: true
+  fplugin.deathmessage.allplayer:
+    default: op
 
   

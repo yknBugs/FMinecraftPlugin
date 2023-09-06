@@ -28,8 +28,10 @@ actionbar:
 # [killer] 对死者造成最后致命一击的实体
 # [damager] 在死者死亡前的一小段时间内对其造成过伤害的玩家
 # [location] 死亡坐标
+# [biome] 死亡坐标的生物群系
 deathmessage:
   noreason: '[entity] 死了'
+  player: '[entity] 的死亡坐标为 [location] ([biome])'
   unknownreason: 
     nokiller: '[entity] 被杀死了'
     onlykiller: '[entity] 被 [killer] 杀死了'

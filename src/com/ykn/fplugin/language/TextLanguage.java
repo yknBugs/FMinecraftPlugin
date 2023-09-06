@@ -17,8 +17,21 @@ public class TextLanguage extends Language {
 
         String damage = damageCause.name().toLowerCase().replace("_", "");
         String message = null;
+        String biome = entity.getLocation().getBlock().getBiome().name().toLowerCase().replace('_', ' ');
 
-        if (killer == null && damager == null) {
+        if (entity instanceof Player) {
+            //玩家死亡
+            message = languageYML.getConfig().getString("deathmessage.player", "[entity] 的死亡坐标为 [location] ([biome])");
+            message = message.replace('&', '\u00a7');
+            message = message.replace("[location]", LocationConfig.formatLocation(entity.getLocation()));
+            message = message.replace("[biome]", biome);
+            if (damager != null && killer != damager) {
+                message = message.replace("[damager]", Util.getEntityName(damager));
+            }
+            if (killer != null) {
+                message = message.replace("[killer]", Util.getEntityName(killer));
+            }
+        } else if (killer == null && damager == null) {
             //两者都无
             message = languageYML.getConfig().getString("deathmessage." + damage + ".nokiller");
             if (message == null) {
@@ -27,6 +40,7 @@ public class TextLanguage extends Language {
             }
             message = message.replace('&', '\u00a7');
             message = message.replace("[location]", LocationConfig.formatLocation(entity.getLocation()));
+            message = message.replace("[biome]", biome);
         } else if (killer == null && damager != null) {
             //无攻击者，有在战斗中的玩家，为 #1 在与 #3 的战斗中xxx
             message = languageYML.getConfig().getString("deathmessage." + damage + ".onlydamager");
@@ -36,6 +50,7 @@ public class TextLanguage extends Language {
             }
             message = message.replace('&', '\u00a7');
             message = message.replace("[location]", LocationConfig.formatLocation(entity.getLocation()));
+            message = message.replace("[biome]", biome);
             message = message.replace("[damager]", Util.getEntityName(damager));
         } else if (killer != null && damager == null) {
             //有攻击者，无在战斗中的玩家，为 #1 被 #2 xxx
@@ -46,6 +61,7 @@ public class TextLanguage extends Language {
             }
             message = message.replace('&', '\u00a7');
             message = message.replace("[location]", LocationConfig.formatLocation(entity.getLocation()));
+            message = message.replace("[biome]", biome);
             message = message.replace("[killer]", Util.getEntityName(killer));
         } else if (killer != null && damager != null && killer != damager) {
             //两者都有但两者不一样，为 #1 在与 #3 的战斗中被 #2 xxx
@@ -56,6 +72,7 @@ public class TextLanguage extends Language {
             }
             message = message.replace('&', '\u00a7');
             message = message.replace("[location]", LocationConfig.formatLocation(entity.getLocation()));
+            message = message.replace("[biome]", biome);
             message = message.replace("[damager]", Util.getEntityName(damager));
             message = message.replace("[killer]", Util.getEntityName(killer));
         } else {
@@ -67,6 +84,7 @@ public class TextLanguage extends Language {
             }
             message = message.replace('&', '\u00a7');
             message = message.replace("[location]", LocationConfig.formatLocation(entity.getLocation()));
+            message = message.replace("[biome]", biome);
             message = message.replace("[killer]", Util.getEntityName(killer));
         }
         message = message.replace("[entity]", Util.getEntityName(entity));
