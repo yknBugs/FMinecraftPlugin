@@ -7,7 +7,7 @@ import com.ykn.fplugin.FPlugin;
 
 public class Config {
     
-    public static final String version = "0.0.4 b3";
+    public static final String version = "0.0.5 b2";
     public static FPlugin thisPlugin = null;
 
     public static boolean getIsDebug() {
@@ -65,10 +65,6 @@ public class Config {
 
     public static boolean isShowPlayerDeathMessage() {
         return thisPlugin.getConfig().getBoolean("deathmessage.player", true);
-    }
-
-    public static String getEntityKillerTag() {
-        return thisPlugin.getConfig().getString("deathmessage.revengetag", "killer");
     }
 
     public static boolean isShowRenamedDeathMessage() {

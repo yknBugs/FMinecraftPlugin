@@ -14,7 +14,7 @@ import org.bukkit.event.entity.EntityDamageEvent.DamageCause;
 import org.bukkit.projectiles.ProjectileSource;
 
 import com.ykn.fplugin.config.Config;
-import com.ykn.fplugin.language.ConsoleLanguage;
+import com.ykn.fplugin.data.ServerData;
 import com.ykn.fplugin.language.Language;
 import com.ykn.fplugin.language.TextLanguage;
 import com.ykn.fplugin.message.PersistentMessage;
@@ -73,10 +73,11 @@ public class EntityDeath implements Listener {
         }
 
         // 复仇
-        if (Config.isShowRevengeDeathMessage() && entity.getScoreboardTags().contains(Config.getEntityKillerTag())) {
+        if (Config.isShowRevengeDeathMessage() && ServerData.killerEntity.contains(entity.getUniqueId())) {
             Language.log(3, message);
             message = Config.getPrefix() + message;
             Util.sendTextMessageToLimit("fplugin.deathmessage.revenge", message);
+            ServerData.killerEntity.remove(entity.getUniqueId());
             return;
         }
 
@@ -133,10 +134,7 @@ public class EntityDeath implements Listener {
             return;
         }
 
-        if (!killer.getScoreboardTags().contains(Config.getEntityKillerTag())) {
-            ConsoleLanguage.sendAddKillerTagMessage(killer);
-            killer.addScoreboardTag(Config.getEntityKillerTag());
-        }
+        ServerData.killerEntity.add(killer.getUniqueId());
     }
 
 

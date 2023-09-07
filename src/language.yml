@@ -3,7 +3,6 @@ console:
   plugindisable: 'FPlugin 插件已停用'
   missingplayerdata: '缺少玩家 [player] 的数据，已为其重新生成数据'
 
-  addkillertag: '给 [entity] 添加 [tag] 标签'
   nodeathreason: '[entity] 因为 [reason] 死亡，但并未在配置文件中找到对应的消息内容'
 
 actionbar:

@@ -41,8 +41,6 @@ deathmessage:
   boss: true
   # 玩家被怪杀死后，复仇杀死该怪是否将消息显示在聊天栏上
   revenge: true
-  # 给杀死玩家的生物加tag的名称，来辨别生物
-  revengetag: 'killer'
   # 杀死有自定义名称或者重命名后的生物是否将消息显示在聊天栏上
   renamed: true
   # 杀死除玩家外的所有生物是否将消息显示在 Actionbar 上
