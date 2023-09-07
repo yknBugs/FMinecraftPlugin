@@ -22,6 +22,11 @@ public class PlayerData {
     public int leaveTick;
 
     /**
+     * 玩家挂机时长
+     */
+    public int afk;
+
+    /**
      * 正在显示在 ActionBar 上的消息集合
      */
     // Java 版本 ActionBar 不能换行
@@ -32,6 +37,7 @@ public class PlayerData {
         this.uuid = null;
         this.joinTick = 0;
         this.leaveTick = 0;
+        this.afk = 0;
         // this.persistentMessages = new LinkedList<PersistentMessage>();
         this.persistentMessage = null;
     }

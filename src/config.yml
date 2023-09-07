@@ -16,6 +16,22 @@ shootmessage:
   # 消息显示的优先级
   priority: 0
 
+# 挂机消息
+afk:
+  active: true
+  # 检测到挂机后在 Actionbar 上是否提醒
+  inform: true
+  # 超过此游戏刻开始提醒检测到挂机
+  informtick: 1200
+  # 挂机消息提醒的显示优先级
+  priority: -1000
+  # 是否在聊天栏广播挂机提示
+  broadcast: true
+  # 超过此游戏刻则广播挂机消息
+  broadcasttick: 6000
+  # 玩家结束挂机时是否广播消息
+  back: true
+
 # 死亡消息
 deathmessage:
   active: true

@@ -9,6 +9,12 @@ import org.bukkit.scheduler.BukkitRunnable;
 import com.ykn.fplugin.config.Config;
 import com.ykn.fplugin.data.PlayerData;
 import com.ykn.fplugin.data.ServerData;
+import com.ykn.fplugin.language.ConsoleLanguage;
+import com.ykn.fplugin.language.Language;
+import com.ykn.fplugin.language.TextLanguage;
+import com.ykn.fplugin.message.PersistentMessage;
+import com.ykn.fplugin.message.PlaceholderMessage;
+import com.ykn.fplugin.util.Util;
 
 import net.md_5.bungee.api.ChatMessageType;
 import net.md_5.bungee.api.chat.TextComponent;
@@ -21,10 +27,43 @@ public class TickChange extends BukkitRunnable {
 
         Collection<? extends Player> players = Bukkit.getServer().getOnlinePlayers();
         for (Player player : players) {
-            PlayerData playerData = ServerData.playerdata.get(player.getUniqueId());
+            PlayerData playerData = this.getPlayerData(player);
+            this.sendAfkMessageToPlayer(player, playerData);
             this.showActionbarMessageToPlayer(player, playerData);
         }
 
+    }
+
+    private PlayerData getPlayerData(Player player) {
+        PlayerData playerData = ServerData.playerdata.get(player.getUniqueId());
+        if (playerData == null) {
+            ConsoleLanguage.sendMissingPlayerDataWarning(player);
+            playerData = new PlayerData();
+            playerData.uuid = player.getUniqueId();
+            playerData.joinTick = ServerData.tick;
+            ServerData.playerdata.put(player.getUniqueId(), playerData);
+        }
+        return playerData;
+    }
+
+    private void sendAfkMessageToPlayer(Player player, PlayerData playerData) {
+        if (Config.isAfkActive() && !player.hasPermission("fplugin.afk.bypass")) {
+            playerData.afk++;
+        }
+
+        if (Config.isAfkInformActive() && playerData.afk > Config.getAfkInformTick()) {
+            String message = TextLanguage.getAfkInformMessage(player, playerData.afk);
+            PlaceholderMessage placeholderMessage = new PlaceholderMessage("fplugin.afk.inform", message);
+            PersistentMessage persistentMessage = new PersistentMessage(0, 200, Config.getAfkInformPriority(), placeholderMessage);
+            Util.replaceActionbarPersistentMessage(playerData, persistentMessage);
+        }
+
+        if (Config.isAfkBroadcastActive() && playerData.afk == Config.getAfkBroadcastTick()) {
+            String message = TextLanguage.getAfkBroadcastMessage(player, playerData.afk);
+            Language.log(3, message);
+            message = Config.getPrefix() + message;
+            Util.sendTextMessageToLimit(player, "fplugin.afk.selfafk", "fplugin.afk.allafk", message);
+        }
     }
 
     private void showActionbarMessageToPlayer(Player player, PlayerData playerData) {

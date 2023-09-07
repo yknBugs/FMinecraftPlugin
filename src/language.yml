@@ -22,6 +22,20 @@ actionbar:
     beinghit: '你被 [shooter] 击中'
     all: '位于 [entityLocation] 的 [hitEntity] (生命值: [entityHealth]) 被 [shooter] 击中'
 
+# 玩家挂机消息
+# 可用占位符
+# [ticks] 已挂机时长 [游戏刻]
+# [seconds] 已挂机时长 [秒数] (向下取整)
+# [player] 挂机的玩家
+# [location] 挂机的坐标
+# [biome] 挂机的生物群系
+# [health] 生命值
+# [hunger] 饥饿值
+afk:
+  inform: '你已挂机 [seconds] 秒'
+  broadcast: '[player] 暂时离开了'
+  back: '[player] 挂机 [seconds] 秒后回来了'
+
 # 生物死亡消息
 # 可用占位符
 # [entity] 死亡的生物

@@ -4,6 +4,7 @@ import org.bukkit.entity.Entity;
 import org.bukkit.entity.LivingEntity;
 import org.bukkit.entity.Player;
 import org.bukkit.event.entity.EntityDamageEvent.DamageCause;
+import org.checkerframework.checker.units.qual.m;
 
 import com.ykn.fplugin.config.LocationConfig;
 import com.ykn.fplugin.util.Util;
@@ -90,6 +91,31 @@ public class TextLanguage extends Language {
         message = message.replace("[entity]", Util.getEntityName(entity));
         // 重命名攻击者实体可能导致通过占位符注入的bug [不严重]
 
+        return message;
+    }
+
+    public static String getAfkInformMessage(Player player, int ticks) {
+        return getAfkMessage(player, ticks, "afk.inform", "你已挂机 [seconds] 秒");
+    }
+
+    public static String getAfkBroadcastMessage(Player player, int ticks) {
+        return getAfkMessage(player, ticks, "afk.broadcast", "[player] 暂时离开了");
+    }
+
+    public static String getAfkBackMessage(Player player, int ticks) {
+        return getAfkMessage(player, ticks, "afk.back", "[player] 挂机 [seconds] 秒后回来了");
+    }
+
+    private static String getAfkMessage(Player player, int ticks, String path, String def) {
+        String message = languageYML.getConfig().getString(path, def);
+        message = message.replace('&', '\u00a7');
+        message = message.replace("[ticks]", Integer.toString(ticks));
+        message = message.replace("[seconds]", Integer.toString(ticks / 20));
+        message = message.replace("[health]", LocationConfig.formatDistance(player.getHealth()));
+        message = message.replace("[hunger]", Integer.toString(player.getFoodLevel()));
+        message = message.replace("[location]", LocationConfig.formatLocation(player.getLocation()));
+        message = message.replace("[biome]", player.getLocation().getBlock().getBiome().name().toLowerCase().replace('_', ' '));
+        message = message.replace("[player]", Util.getEntityName(player));
         return message;
     }
     

@@ -160,4 +160,19 @@ public class Util {
         }   
     }
 
+    /**
+     * 尝试替换掉现在正在显示在 Actionbar 上的持续性消息
+     * @param playerData 玩家数据
+     * @param persistentMessage 替换后的消息
+     */
+    public static void replaceActionbarPersistentMessage(PlayerData playerData, PersistentMessage persistentMessage) {
+        Player player = Bukkit.getServer().getPlayer(playerData.uuid);
+        if (!player.hasPermission(persistentMessage.placeholderMessage.permission)) {
+            return;
+        }
+        if (playerData.persistentMessage == null || playerData.persistentMessage.priority <= persistentMessage.priority) {
+            playerData.persistentMessage = persistentMessage;
+        }   
+    }
+
 }

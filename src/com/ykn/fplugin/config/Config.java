@@ -7,7 +7,7 @@ import com.ykn.fplugin.FPlugin;
 
 public class Config {
     
-    public static final String version = "0.0.3";
+    public static final String version = "0.0.4 b3";
     public static FPlugin thisPlugin = null;
 
     public static boolean getIsDebug() {
@@ -73,5 +73,33 @@ public class Config {
 
     public static boolean isShowRenamedDeathMessage() {
         return thisPlugin.getConfig().getBoolean("deathmessage.renamed", true);
+    }
+
+    public static boolean isAfkActive() {
+        return thisPlugin.getConfig().getBoolean("afk.active", true);
+    }
+
+    public static boolean isAfkInformActive() {
+        return thisPlugin.getConfig().getBoolean("afk.inform", true);
+    }
+
+    public static int getAfkInformTick() {
+        return thisPlugin.getConfig().getInt("afk.informtick", 1200);
+    }
+
+    public static int getAfkInformPriority() {
+        return thisPlugin.getConfig().getInt("afk.priority", -1000);
+    }
+
+    public static boolean isAfkBroadcastActive() {
+        return thisPlugin.getConfig().getBoolean("afk.broadcast", true);
+    }
+
+    public static int getAfkBroadcastTick() {
+        return thisPlugin.getConfig().getInt("afk.broadcasttick", 6000);
+    }
+
+    public static boolean isAfkBackActive() {
+        return thisPlugin.getConfig().getBoolean("afk.back", true);
     }
 }

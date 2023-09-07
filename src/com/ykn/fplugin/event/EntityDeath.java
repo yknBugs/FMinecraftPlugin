@@ -52,7 +52,7 @@ public class EntityDeath implements Listener {
         if (Config.isShowPlayerDeathMessage() && entity instanceof Player) {
             Language.log(3, message);
             message = Config.getPrefix() + message;
-            Util.sendTextMessageToLimit((Player) entity, "fplugin.deathmessage.player", "fplugin.deathmessage.allplayer", message);
+            Util.sendTextMessageToLimit((Player) entity, "fplugin.deathmessage.self", "fplugin.deathmessage.player", message);
             return;
         }
 
