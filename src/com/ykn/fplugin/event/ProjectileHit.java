@@ -49,7 +49,8 @@ public class ProjectileHit implements Listener {
                 shootMessage = new ShootMessage("fplugin.shootmessage.all", message, projectile, hitEntity, shooter);
             }
 
-            Util.replaceActionbarPersistentMessage(player, new PersistentMessage(0, 100, Config.getShootMessagePriority(), shootMessage));
+            PersistentMessage pMessage = new PersistentMessage(0, Config.getShootMessageDuration(), Config.getShootMessagePriority(), shootMessage);
+            Util.replaceActionbarPersistentMessage(player, pMessage);
         }
     }
 

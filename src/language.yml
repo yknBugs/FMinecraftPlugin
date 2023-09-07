@@ -200,3 +200,8 @@ deathmessage:
     onlykiller: '[entity] 被 [killer] 凋零'
     onlydamager: '[entity] 在与 [damager] 战斗时凋谢了'
     both: '[entity] 在与 [damager] 战斗时被 [killer] 凋零'
+
+# 使用指令的消息
+command:
+  unknown: '未知的指令参数 [args]'
+  nopermission: '你没有使用这个指令的权限'

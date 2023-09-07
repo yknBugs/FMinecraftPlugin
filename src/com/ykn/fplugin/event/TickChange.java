@@ -54,7 +54,7 @@ public class TickChange extends BukkitRunnable {
         if (Config.isAfkInformActive() && playerData.afk > Config.getAfkInformTick()) {
             String message = TextLanguage.getAfkInformMessage(player, playerData.afk);
             PlaceholderMessage placeholderMessage = new PlaceholderMessage("fplugin.afk.inform", message);
-            PersistentMessage persistentMessage = new PersistentMessage(0, 200, Config.getAfkInformPriority(), placeholderMessage);
+            PersistentMessage persistentMessage = new PersistentMessage(0, Config.getAfkInformDuration(), Config.getAfkInformPriority(), placeholderMessage);
             Util.replaceActionbarPersistentMessage(playerData, persistentMessage);
         }
 

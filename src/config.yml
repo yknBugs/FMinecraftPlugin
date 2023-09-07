@@ -15,6 +15,8 @@ shootmessage:
   active: true
   # 消息显示的优先级
   priority: 0
+  # 消息显示的持续时长
+  duration: 100
 
 # 挂机消息
 afk:
@@ -25,6 +27,8 @@ afk:
   informtick: 1200
   # 挂机消息提醒的显示优先级
   priority: -1000
+  # 消息显示的持续时长
+  duration: 60
   # 是否在聊天栏广播挂机提示
   broadcast: true
   # 超过此游戏刻则广播挂机消息
@@ -49,6 +53,8 @@ deathmessage:
   player: true
   # 消息显示的优先级
   priority: 0
+  # 消息显示的持续时长
+  duration: 200
 
 # 定义坐标，和与坐标相关的时间的显示方式
 # 占位符 w世界名称，x y z坐标，p q仰角和水平视角
