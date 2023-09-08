@@ -7,7 +7,7 @@ import org.bukkit.event.player.PlayerQuitEvent;
 
 import com.ykn.fplugin.data.PlayerData;
 import com.ykn.fplugin.data.ServerData;
-import com.ykn.fplugin.language.ConsoleLanguage;
+import com.ykn.fplugin.util.Util;
 
 public class PlayerQuit implements Listener {
 
@@ -17,14 +17,7 @@ public class PlayerQuit implements Listener {
     }
 
     private void setPlayerQuitTick(Player player) {
-        PlayerData playerData = ServerData.playerdata.get(player.getUniqueId());
-        if (playerData == null) {
-            ConsoleLanguage.sendMissingPlayerDataWarning(player);
-            playerData = new PlayerData();
-            playerData.uuid = player.getUniqueId();
-            playerData.joinTick = ServerData.tick;
-            ServerData.playerdata.put(player.getUniqueId(), playerData);
-        }
+        PlayerData playerData = Util.getPlayerData(player);
         playerData.leaveTick = ServerData.tick;
         playerData.afk = 0;
         // playerData.persistentMessages.clear();

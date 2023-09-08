@@ -7,7 +7,7 @@ import com.ykn.fplugin.FPlugin;
 
 public class Config {
     
-    public static final String version = "0.0.5";
+    public static final String version = "0.0.6";
     public static FPlugin thisPlugin = null;
 
     public static boolean getIsDebug() {
@@ -109,5 +109,21 @@ public class Config {
 
     public static boolean isAfkBackActive() {
         return thisPlugin.getConfig().getBoolean("afk.back", true);
+    }
+
+    public static boolean isBiomeMessageActive() {
+        return thisPlugin.getConfig().getBoolean("biomemessage.active", true);
+    }
+
+    public static int getBiomeMessageDelay() {
+        return thisPlugin.getConfig().getInt("biomemessage.delay", 100);
+    }
+
+    public static int getBiomeMessagePriority() {
+        return thisPlugin.getConfig().getInt("biomemessage.priority", -500);
+    }
+
+    public static int getBiomeMessageDuration() {
+        return thisPlugin.getConfig().getInt("biomemessage.duration", 60);
     }
 }

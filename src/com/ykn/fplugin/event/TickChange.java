@@ -9,7 +9,7 @@ import org.bukkit.scheduler.BukkitRunnable;
 import com.ykn.fplugin.config.Config;
 import com.ykn.fplugin.data.PlayerData;
 import com.ykn.fplugin.data.ServerData;
-import com.ykn.fplugin.language.ConsoleLanguage;
+import com.ykn.fplugin.language.ActionbarLanguage;
 import com.ykn.fplugin.language.Language;
 import com.ykn.fplugin.language.TextLanguage;
 import com.ykn.fplugin.message.PersistentMessage;
@@ -27,23 +27,12 @@ public class TickChange extends BukkitRunnable {
 
         Collection<? extends Player> players = Bukkit.getServer().getOnlinePlayers();
         for (Player player : players) {
-            PlayerData playerData = this.getPlayerData(player);
+            PlayerData playerData = Util.getPlayerData(player);
             this.sendAfkMessageToPlayer(player, playerData);
+            this.sendBiomeMessageToPlayer(player, playerData);
             this.showActionbarMessageToPlayer(player, playerData);
         }
 
-    }
-
-    private PlayerData getPlayerData(Player player) {
-        PlayerData playerData = ServerData.playerdata.get(player.getUniqueId());
-        if (playerData == null) {
-            ConsoleLanguage.sendMissingPlayerDataWarning(player);
-            playerData = new PlayerData();
-            playerData.uuid = player.getUniqueId();
-            playerData.joinTick = ServerData.tick;
-            ServerData.playerdata.put(player.getUniqueId(), playerData);
-        }
-        return playerData;
     }
 
     private void sendAfkMessageToPlayer(Player player, PlayerData playerData) {
@@ -64,6 +53,25 @@ public class TickChange extends BukkitRunnable {
             message = Config.getPrefix() + message;
             Util.sendTextMessageToLimit(player, "fplugin.afk.selfafk", "fplugin.afk.allafk", message);
         }
+    }
+
+    private void sendBiomeMessageToPlayer(Player player, PlayerData playerData) {
+        if (!Config.isBiomeMessageActive()) {
+            return;
+        }
+
+        if (playerData.biomeMessageDelay == 0 && player.getLocation().getBlock().getBiome() != playerData.lastBiome) {
+            playerData.lastBiome = player.getLocation().getBlock().getBiome();
+            String selfMessage = ActionbarLanguage.getSelfBiomeMessage(player);
+            PlaceholderMessage selfPhMessage = new PlaceholderMessage("fplugin.biomemessage.self", selfMessage);
+            PersistentMessage selfPMessage = new PersistentMessage(0, Config.getBiomeMessageDuration(), Config.getBiomeMessagePriority(), selfPhMessage);
+            String otherMessage = ActionbarLanguage.getOtherBiomeMessage(player);
+            PlaceholderMessage otherPhMessage = new PlaceholderMessage("fplugin.biomemessage.other", otherMessage);
+            PersistentMessage otherPMessage = new PersistentMessage(0, Config.getBiomeMessageDuration(), Config.getBiomeMessagePriority(), otherPhMessage);
+            Util.sendUniqueActionbarMessage(player, selfPMessage, otherPMessage);
+        }
+
+        playerData.biomeMessageDelay--;
     }
 
     private void showActionbarMessageToPlayer(Player player, PlayerData playerData) {

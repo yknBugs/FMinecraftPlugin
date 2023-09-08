@@ -6,10 +6,10 @@ author: ykn
 
 commands:
   f:
-    description: Open GUI with various function
-    usage: Usage /<command> to open the gui
+    description: Base command for FMinecraftPlugin
+    usage: Type /<command> for more information
     permission: fplugin.f
-    permission-message: You have no permission to execute this command
+    permission-message: You do not have permission to execute this command
 
 permissions:
   fplugin.f:
@@ -77,4 +77,13 @@ permissions:
     default: true
   fplugin.afk.allback:
     default: true
+  fplugin.biomemessage:
+    default: op
+    children: 
+      fplugin.biomemessage.self: true
+      fplugin.biomemessage.other: true
+  fplugin.biomemessage.self:
+    default: true
+  fplugin.biomemessage.other:
+    default: op
   

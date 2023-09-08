@@ -1,8 +1,8 @@
 package com.ykn.fplugin.data;
 
-import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.UUID;
 
 import org.bukkit.Bukkit;
@@ -14,7 +14,7 @@ public class ServerData {
 
     public static HashMap<UUID, PlayerData> playerdata = new HashMap<UUID, PlayerData>();
 
-    public static Collection<UUID> killerEntity = new ArrayList<UUID>();
+    public static Collection<UUID> killerEntity = new HashSet<UUID>();
 
     public static PlayerData getPlayerData(UUID uuid) {
         return playerdata.get(uuid);

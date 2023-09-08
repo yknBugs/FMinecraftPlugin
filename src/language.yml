@@ -20,6 +20,14 @@ actionbar:
     hitother: '你击中了 [distance] 米外的 [hitEntity] (生命值: [entityHealth])'
     beinghit: '你被 [shooter] 击中'
     all: '位于 [entityLocation] 的 [hitEntity] (生命值: [entityHealth]) 被 [shooter] 击中'
+  # 玩家进入新的生物群系的消息
+  # 此消息的占位符不会实时变化
+  # 可用占位符
+  # [player] 玩家
+  # [biome] 生物群系
+  biome:
+    self: '已来到 [biome]'
+    other: '[player] 到了 [biome]'
 
 # 玩家挂机消息
 # 可用占位符

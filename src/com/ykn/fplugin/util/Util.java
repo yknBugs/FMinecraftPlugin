@@ -1,6 +1,7 @@
 package com.ykn.fplugin.util;
 
 import java.util.Collection;
+import java.util.UUID;
 
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Entity;
@@ -123,6 +124,25 @@ public class Util {
     }
 
     /**
+     * 向所有玩家发送消息，但特定的玩家会收到独有的消息内容
+     * @param target 会收到独有消息的玩家
+     * @param selfMessage 独有的消息内容
+     * @param otherMessage 普通的消息内容
+     */
+    public static void sendUniqueActionbarMessage(Player target, PersistentMessage selfMessage, PersistentMessage otherMessage) {
+        Collection<? extends Player> players = Bukkit.getServer().getOnlinePlayers();
+        String selfPermission = selfMessage.placeholderMessage.permission;
+        String otherPermission = otherMessage.placeholderMessage.permission;
+        for (Player player : players) {
+            if (player == target && player.hasPermission(selfPermission)) {
+                replaceActionbarPersistentMessage(player, selfMessage);
+            } else if (player.hasPermission(otherPermission)) {
+                replaceActionbarPersistentMessage(player, otherMessage);
+            }
+        }
+    }
+
+    /**
      * 获取实体的名称，被重命名后的实体会返回重命名后的名称
      * @param entity 要获取名称的实体
      * @return 实体的名称
@@ -139,14 +159,11 @@ public class Util {
     }
 
     /**
-     * 尝试替换掉现在正在显示在 Actionbar 上的持续性消息
+     * 获取玩家数据，如果没有则创建玩家数据
      * @param player 玩家
-     * @param persistentMessage 替换后的消息
+     * @return 玩家数据
      */
-    public static void replaceActionbarPersistentMessage(Player player, PersistentMessage persistentMessage) {
-        if (!player.hasPermission(persistentMessage.placeholderMessage.permission)) {
-            return;
-        }
+    public static PlayerData getPlayerData(Player player) {
         PlayerData playerData = ServerData.playerdata.get(player.getUniqueId());
         if (playerData == null) {
             ConsoleLanguage.sendMissingPlayerDataWarning(player);
@@ -155,6 +172,37 @@ public class Util {
             playerData.joinTick = ServerData.tick;
             ServerData.playerdata.put(player.getUniqueId(), playerData);
         }
+        return playerData;
+    }
+
+    /**
+     * 获取玩家数据，如果没有则创建玩家数据
+     * @param uuid 玩家的uuid
+     * @return 玩家数据
+     */    
+    public static PlayerData getPlayerData(UUID uuid) {
+        PlayerData playerData = ServerData.playerdata.get(uuid);
+        if (playerData == null) {
+            Player player = Bukkit.getServer().getPlayer(uuid);
+            ConsoleLanguage.sendMissingPlayerDataWarning(player);
+            playerData = new PlayerData();
+            playerData.uuid = player.getUniqueId();
+            playerData.joinTick = ServerData.tick;
+            ServerData.playerdata.put(player.getUniqueId(), playerData);
+        }
+        return playerData;
+    }
+
+    /**
+     * 尝试替换掉现在正在显示在 Actionbar 上的持续性消息
+     * @param player 玩家
+     * @param persistentMessage 替换后的消息
+     */
+    public static void replaceActionbarPersistentMessage(Player player, PersistentMessage persistentMessage) {
+        if (!player.hasPermission(persistentMessage.placeholderMessage.permission)) {
+            return;
+        }
+        PlayerData playerData = getPlayerData(player);
         if (playerData.persistentMessage == null || playerData.persistentMessage.priority <= persistentMessage.priority) {
             playerData.persistentMessage = persistentMessage;
         }   
