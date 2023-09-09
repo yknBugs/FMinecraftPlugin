@@ -66,6 +66,20 @@ biomemessage:
   # 消息显示的持续时长
   duration: 60
 
+# 被怪物围攻的消息
+siegemessage:
+  active: true
+  # 显示消息的优先级
+  priority: 0
+  # 显示消息的持续时长
+  duration: 100
+  # 被认定是围攻情况的周围怪物数量
+  monster: 8
+  # 被认定在玩家附近的怪物到玩家 x y z 轴上的距离，超出这个距离将不被认定在玩家附近
+  distancex: 8
+  distancey: 8
+  distancez: 8
+
 # 定义坐标，和与坐标相关的时间的显示方式
 # 占位符 w世界名称，x y z坐标，p q仰角和水平视角
 # 注意此处的占位符不需要用包括中括号在内的任何符号包围

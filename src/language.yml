@@ -28,6 +28,19 @@ actionbar:
   biome:
     self: '已来到 [biome]'
     other: '[player] 到了 [biome]'
+  # 玩家被怪物围攻时的消息
+  # 可用占位符
+  # [entity] 其中一个实体的名称
+  # [entityHealth] 其中一个实体的生命值
+  # [count] 附近实体的数量
+  # [player] 被围攻者
+  # [playerHealth] 被围攻者血量
+  # [playerHunger] 被围攻者的生命值
+  # [location] 被围攻者的坐标
+  # [biome] 被围攻者所在的生物群系
+  siege:
+    self: '你附近有 [entity] 等 [count] 个怪物'
+    other: '位于 [location] 的 [player] (生命值: [playerHealth]) 附近有 [entity] 等 [count] 个怪物'
 
 # 玩家挂机消息
 # 可用占位符

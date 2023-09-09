@@ -33,5 +33,13 @@ public class ActionbarLanguage extends Language {
         message = message.replace("[player]", Util.getEntityName(player));
         return message;
     }
+
+    public static String getSelfSiegeMessage() {
+        return languageYML.getConfig().getString("actionbar.siege.self", "你附近有 [entity] 等 [count] 个怪物"); 
+    }
+
+    public static String getOtherSiegeMessage() {
+        return languageYML.getConfig().getString("actionbar.siege.other", "位于 [location] 的 [player] (生命值: [playerhealth]) 附近有 [entity] 等 [count] 个怪物"); 
+    }
     
 }

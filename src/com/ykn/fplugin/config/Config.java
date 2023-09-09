@@ -7,7 +7,7 @@ import com.ykn.fplugin.FPlugin;
 
 public class Config {
     
-    public static final String version = "0.0.6";
+    public static final String version = "0.0.7 b1";
     public static FPlugin thisPlugin = null;
 
     public static boolean getIsDebug() {
@@ -125,5 +125,33 @@ public class Config {
 
     public static int getBiomeMessageDuration() {
         return thisPlugin.getConfig().getInt("biomemessage.duration", 60);
+    }
+
+    public static boolean isSiegeMessageActive() {
+        return thisPlugin.getConfig().getBoolean("siegemessage.active", true);
+    }
+
+    public static int getSiegeMonsterCount() {
+        return thisPlugin.getConfig().getInt("siegemessage.monster", 8);
+    }
+
+    public static int getSiegeMessagePriority() {
+        return thisPlugin.getConfig().getInt("siegemessage.priority", 0);
+    }
+
+    public static int getSiegeMessageDuration() {
+        return thisPlugin.getConfig().getInt("siegemessage.duration", 100);
+    }
+
+    public static int getSiegeMonsterDistanceX() {
+        return thisPlugin.getConfig().getInt("siegemessage.distancex", 8);
+    }
+
+    public static int getSiegeMonsterDistanceY() {
+        return thisPlugin.getConfig().getInt("siegemessage.distancey", 8);
+    }
+
+    public static int getSiegeMonsterDistanceZ() {
+        return thisPlugin.getConfig().getInt("siegemessage.distancez", 8);
     }
 }

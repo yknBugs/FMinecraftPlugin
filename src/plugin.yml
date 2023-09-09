@@ -86,4 +86,13 @@ permissions:
     default: true
   fplugin.biomemessage.other:
     default: op
+  fplugin.siegemessage:
+    default: op
+    children:
+      fplugin.siegemessage.self: true
+      fplugin.siegemessage.other: true
+  fplugin.siegemessage.self:
+    default: true
+  fplugin.siegemessage.other:
+    default: op
   
