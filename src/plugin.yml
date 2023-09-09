@@ -1,6 +1,6 @@
 name: FPlugin
 main: com.ykn.fplugin.FPlugin
-version: 0.0.1
+version: 0.1.0
 api-version: 1.13
 author: ykn
 
@@ -19,9 +19,12 @@ permissions:
     children:
       fplugin.command.f: true
       fplugin.command.dev: true
+      fplugin.command.reload: true
   fplugin.command.f:
     default: true
   fplugin.command.dev:
+    default: op
+  fplugin.command.reload:
     default: op
   fplugin.shootmessage:
     default: op

@@ -28,6 +28,11 @@ public class SendCommand implements TabExecutor {
             FCommand.runDevCommand(sender, args);
             return true;
         }
+        
+        if ("reload".equalsIgnoreCase(args[0])) {
+            FCommand.runReloadCommand(sender, args);
+            return true;
+        }
 
         CommandLanguage.sendUnknownCommandMessage(sender, args[0]);
         return true;
@@ -42,8 +47,12 @@ public class SendCommand implements TabExecutor {
 
         //f <inserting...>
         if (args.length == 1) {
-            if (Config.getIsDebug() && sender.hasPermission("fplugin.f.dev")) {
+            if (Config.getIsDebug() && sender.hasPermission("fplugin.command.dev")) {
                 result.add("dev");
+            }
+
+            if (sender.hasPermission("fplugin.command.reload")) {
+                result.add("reload");
             }
 
             return result;

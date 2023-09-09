@@ -20,7 +20,7 @@ public class PlayerMove implements Listener {
         Biome biomeFrom = playerMoveEvent.getFrom().getBlock().getBiome();
         Biome biomeTo = playerMoveEvent.getTo().getBlock().getBiome();
 
-        if (Config.isAfkActive() && isChangeSightDirection(playerMoveEvent.getFrom(), playerMoveEvent.getTo())) {
+        if (Config.isAfkActive() && this.isChangeSightDirection(playerMoveEvent.getFrom(), playerMoveEvent.getTo())) {
             this.resetPlayerAfkTimer(playerMoveEvent.getPlayer());
         }
 

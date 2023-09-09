@@ -1,14 +1,19 @@
 package com.ykn.fplugin;
 
+import java.util.Collection;
 import java.util.logging.Level;
 
+import org.bukkit.Bukkit;
 import org.bukkit.command.PluginCommand;
+import org.bukkit.entity.Player;
 import org.bukkit.event.HandlerList;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.bukkit.scheduler.BukkitTask;
 
 import com.ykn.fplugin.config.Config;
 import com.ykn.fplugin.config.ConfigAccessor;
+import com.ykn.fplugin.data.PlayerData;
+import com.ykn.fplugin.data.ServerData;
 import com.ykn.fplugin.event.EntityDamage;
 import com.ykn.fplugin.event.EntityDeath;
 import com.ykn.fplugin.event.PlayerJoin;
@@ -27,12 +32,17 @@ public class FPlugin extends JavaPlugin {
     @Override
     public void onEnable() {
         //保存并读取config.yml和language.yml
-        this.getConfig().options().copyDefaults();
+        // this.getConfig().options().copyDefaults(true);
         this.saveDefaultConfig();
+        this.saveConfig();
+        this.reloadConfig();
 
         ConfigAccessor languageConfig = new ConfigAccessor(this, "language.yml");
-        languageConfig.getConfig().options().copyDefaults();
+        // languageConfig.getConfig().options().copyDefaults(true);
         languageConfig.saveDefaultConfig();
+        languageConfig.saveConfig();
+        languageConfig.reloadConfig();
+
 
         //保存实例
         Config.thisPlugin = this;
@@ -56,6 +66,17 @@ public class FPlugin extends JavaPlugin {
         } else {
             fCommand.setExecutor(new SendCommand());
             fCommand.setTabCompleter(new SendCommand());
+        }
+
+        //重新将所有玩家加入到数据列表
+        Collection<? extends Player> players = Bukkit.getServer().getOnlinePlayers();
+        for (Player player : players) {
+            if (!ServerData.playerdata.containsKey(player.getUniqueId())) {
+                PlayerData playerData = new PlayerData();
+                playerData.uuid = player.getUniqueId();
+                playerData.joinTick = ServerData.tick;
+                ServerData.playerdata.put(player.getUniqueId(), playerData);
+            }
         }
 
         ConsoleLanguage.sendPluginEnableMessage();

@@ -7,7 +7,7 @@ import com.ykn.fplugin.FPlugin;
 
 public class Config {
     
-    public static final String version = "0.0.8 b2";
+    public static final String version = "0.1.0";
     public static FPlugin thisPlugin = null;
 
     public static boolean getIsDebug() {
@@ -26,7 +26,7 @@ public class Config {
         return thisPlugin.getConfig().getBoolean("ignoreentityname", false);
     }
 
-    public static boolean isActiveShootMessage() {
+    public static boolean isShootMessageActive() {
         return thisPlugin.getConfig().getBoolean("shootmessage.active", true);
     }
 
@@ -38,12 +38,24 @@ public class Config {
         return thisPlugin.getConfig().getInt("shootmessage.duration", 100);
     }
 
+    public static boolean isBeingHitMessageActive() {
+        return thisPlugin.getConfig().getBoolean("shootmessage.beinghit", true);
+    }
+
+    public static boolean isHitOtherMessageActive() {
+        return thisPlugin.getConfig().getBoolean("shootmessage.hitother", true);
+    }
+
+    public static boolean isAllShootMessageActive() {
+        return thisPlugin.getConfig().getBoolean("shootmessage.all", true);
+    }
+
     public static String formatTime(LocalDateTime time) {
         String result = thisPlugin.getConfig().getString("timeformat", "yyyy年M月d日 H:mm:ss");
         return time.format(DateTimeFormatter.ofPattern(result));
     }
 
-    public static boolean isActiveEntityDeathMessage() {
+    public static boolean isEntityDeathMessageActive() {
         return thisPlugin.getConfig().getBoolean("deathmessage.active", true);
     }
 
@@ -55,7 +67,7 @@ public class Config {
         return thisPlugin.getConfig().getInt("deathmessage.duration", 200);
     }
 
-    public static int getHealthRegardedAsBoss() {
+    public static int getEntityDeathMessageHealth() {
         return thisPlugin.getConfig().getInt("deathmessage.health", 150);
     }
 

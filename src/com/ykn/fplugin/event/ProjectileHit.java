@@ -26,29 +26,35 @@ public class ProjectileHit implements Listener {
         Projectile projectile = projectileHitEvent.getEntity();
         Entity hitEntity = projectileHitEvent.getHitEntity();
         ProjectileSource shooter = projectile.getShooter();
-        if (Config.isActiveShootMessage() && hitEntity != null && hitEntity instanceof LivingEntity 
+        if (Config.isShootMessageActive() && hitEntity != null && hitEntity instanceof LivingEntity 
         && shooter != null && shooter instanceof LivingEntity && shooter != hitEntity) {
-            showShootMessage(projectile, (LivingEntity) hitEntity, (LivingEntity) shooter);
+            this.showShootMessage(projectile, (LivingEntity) hitEntity, (LivingEntity) shooter);
         }
 
     }
 
     private void showShootMessage(Projectile projectile, LivingEntity hitEntity, LivingEntity shooter) {
+        if (!hitEntity.isValid() || !shooter.isValid() || hitEntity.getWorld() != shooter.getWorld()) {
+            return;
+        }
         Collection<? extends Player> players = Bukkit.getServer().getOnlinePlayers();
         for (Player player : players) {
-            String message;
-            ShootMessage shootMessage;
-            if (player == shooter) {
+            String message = null;
+            ShootMessage shootMessage = null;
+            if (Config.isHitOtherMessageActive() && player == shooter) {
                 message = ActionbarLanguage.getShootMessage();
                 shootMessage = new ShootMessage("fplugin.shootmessage.hitother", message, projectile, hitEntity, shooter);
-            } else if (player == hitEntity) {
+            } else if (Config.isBeingHitMessageActive() && player == hitEntity) {
                 message = ActionbarLanguage.getBeingShootMessage();
                 shootMessage = new ShootMessage("fplugin.shootmessage.beinghit", message, projectile, hitEntity, shooter);
-            } else {
+            } else if (Config.isAllShootMessageActive()) {
                 message = ActionbarLanguage.getShootAllMessage();
                 shootMessage = new ShootMessage("fplugin.shootmessage.all", message, projectile, hitEntity, shooter);
             }
 
+            if (message == null || shootMessage == null) {
+                continue;
+            }
             PersistentMessage pMessage = new PersistentMessage(0, Config.getShootMessageDuration(), Config.getShootMessagePriority(), shootMessage);
             Util.replaceActionbarPersistentMessage(player, pMessage);
         }

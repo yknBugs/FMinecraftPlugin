@@ -1,25 +1,47 @@
-# 控制台输出更多信息
-debug: true
+# 控制台是否输出更多信息
+debug: false
 
 # 消息前缀
 prefix: '&d&lF &r&e> &e'
 
-# 禁止任何玩家输入的地方包含中括号，避免可能的利用占位符注入
+# 禁止任何玩家输入的地方包含中括号，避免玩家输入的内容中包含和配置文件中可被解析的占位符相同的字符内容，导致玩家输入的内容被异常解析
+# 启用后，会强制将所有可能由玩家输入的字符串中的中括号替换为小括号，例如实体名称
 nocustom: false
 
-# 获取实体的名称时忽略命名牌命名后的名称
+# 获取实体的名称时忽略命名牌命名后的名称 [未实现]
 ignoreentityname: false
 
 # 射箭消息
+# 权限说明 
+# fplugin.shootmessage 让玩家拥有所有与射箭消息相关的权限
+# fplugin.shootmessage.hitother 允许玩家看到自己发射的弹射物击中别人的消息
+# fplugin.shootmessage.beinghit 允许玩家看到自己被别人的弹射物击中的消息
+# fplugin.shootmessage.all 允许玩家看到别人的弹射物击中别人的消息
 shootmessage: 
+  # 是否启用显示射箭消息的功能
   active: true
   # 消息显示的优先级
   priority: 0
-  # 消息显示的持续时长
+  # 消息显示的持续时长 [游戏刻]
   duration: 100
+  # 是否显示射中别人的消息
+  hitother: true
+  # 是否显示被射中的消息
+  beinghit: true
+  # 是否显示所有被射中的消息
+  all: true
 
 # 挂机消息
+# 权限说明 
+# fplugin.afk 让玩家拥有所有与挂机消息相关的权限
+# fplugin.afk.bypass 允许玩家挂机而不累计挂机时长，也就是绕过挂机检测
+# fplugin.afk.inform 允许玩家看到检测到自己挂机行为的提醒
+# fplugin.afk.selfafk 允许玩家看到自己挂机在聊天栏产生的提示消息
+# fplugin.afk.allafk 允许玩家看到任意玩家(包括自己)挂机在聊天栏产生的提示消息
+# fplugin.afk.selfback 允许玩家看到自己挂机结束后的消息
+# fplugin.afk.allback 允许玩家看到任意玩家(包括自己)挂机结束后的消息
 afk:
+  # 是否启用挂机检测的功能
   active: true
   # 检测到挂机后在 Actionbar 上是否提醒
   inform: true
@@ -27,7 +49,7 @@ afk:
   informtick: 1200
   # 挂机消息提醒的显示优先级
   priority: -1000
-  # 消息显示的持续时长
+  # 消息显示的持续时长 [游戏刻]
   duration: 60
   # 是否在聊天栏广播挂机提示
   broadcast: true
@@ -37,13 +59,22 @@ afk:
   back: true
 
 # 死亡消息
+# 权限说明 
+# fplugin.deathmessage 让玩家拥有所有与死亡消息相关的权限
+# fplugin.deathmessage.all 允许玩家看到任意生物死亡(不包括玩家)产生的死亡消息
+# fplugin.deathmessage.renamed 允许玩家看到被重命名后的生物死亡产生的聊天消息
+# fplugin.deathmessage.boss 允许玩家看到boss死亡产生的聊天消息
+# fplugin.deathmessage.revenge 允许玩家看到曾杀死过玩家的生物死亡(不包括玩家)产生的聊天消息
+# fplugin.deathmessage.self 允许玩家看到自己死亡产生的聊天消息(仅控制插件产生的额外聊天消息，原版的死亡消息不受影响)
+# fplugin.deathmessage.player 允许玩家看到其它玩家死亡产生的聊天消息
 deathmessage:
+  # 是否启用显示生物死亡消息的功能
   active: true
   # 最大生命值大于(不包括等于)此的生物死亡时，消息显示在聊天栏上
   health: 150
   # 最大生命值大于一定数值的生物死亡时是否将消息显示在聊天栏上
   boss: true
-  # 玩家被怪杀死后，复仇杀死该怪是否将消息显示在聊天栏上
+  # 曾经杀死过玩家的生物死亡时，是否将消息显示在聊天栏上
   revenge: true
   # 杀死有自定义名称或者重命名后的生物是否将消息显示在聊天栏上
   renamed: true
@@ -53,39 +84,54 @@ deathmessage:
   player: true
   # 消息显示的优先级
   priority: 0
-  # 消息显示的持续时长
+  # 消息显示的持续时长 [游戏刻]
   duration: 200
 
 # 切换生物群系消息
+# 权限说明 
+# fplugin.biomemessage 让玩家拥有所有与生物群系消息相关的权限
+# fplugin.biomemessage.self 允许玩家看到自己的生物群系改变时显示的消息
+# fplugin.biomemessage.other 允许玩家看到任意玩家(包括自己)的生物群系改变时显示的消息
 biomemessage:
+  # 是否启用显示生物群系改变的消息的功能
   active: true
-  # 显示消息的延迟
+  # 显示消息的延迟 [游戏刻]
   delay: 100
   # 消息显示的优先级
   priority: -500
-  # 消息显示的持续时长
+  # 消息显示的持续时长 [游戏刻]
   duration: 60
 
 # 被怪物围攻的消息
+# 权限说明 
+# fplugin.siegemessage 让玩家拥有所有与被怪物围攻消息相关的权限
+# fplugin.siegemessage.self 允许玩家看到自己被怪物围攻时显示的消息
+# fplugin.siegemessage.other 允许玩家看到任意玩家(包括自己)被怪物围攻时显示的消息
 siegemessage:
+  # 是否启用显示被怪物围攻的消息的功能
   active: true
   # 显示消息的优先级
   priority: 0
-  # 显示消息的持续时长
+  # 显示消息的持续时长 [游戏刻]
   duration: 100
   # 被认定是围攻情况的周围怪物数量
   monster: 8
-  # 被认定在玩家附近的怪物到玩家 x y z 轴上的距离，超出这个距离将不被认定在玩家附近
+  # 被认定在玩家附近的怪物到玩家 x y z 轴上的距离，超出这个距离的实体将不被认定在玩家附近，也不计入怪物数量统计
   distancex: 8
   distancey: 8
   distancez: 8
 
 # 打 Boss 的消息
+# 权限说明 
+# fplugin.bossmessage 让玩家拥有所有与boss消息相关的权限
+# fplugin.bossmessage.self 允许玩家看到自己与boss战斗时显示的消息
+# fplugin.bossmessage.other 允许玩家看到任意玩家(包括自己)与boss战斗时显示的消息
 bossmessage:
+  # 是否启用显示boss消息的功能
   active: true
   # 显示消息的优先级
   priority: -750
-  # 显示消息的持续时长
+  # 显示消息的持续时长 [游戏刻]
   duration: 600
   # 最大生命值大于(不包括等于)此的生物被认定为boss
   health: 150
@@ -97,10 +143,10 @@ bossmessage:
 location:
   # 格式形式
   format: '(w) [x, y, z]'
-  # 保留有效位数个数，这包括获取两点间的距离的有效位数
+  # 保留有效位数个数，这包括获取两点间的距离，生物血量的有效位数
   accuracy: 1
-  # 隐藏命名空间
+  # 是否隐藏命名空间
   hidenamespace: true
 
-# 定义时间的显示方式
+# 定义时间的显示方式 [未使用]
 timeformat: 'yyyy年M月d日 H:mm:ss'

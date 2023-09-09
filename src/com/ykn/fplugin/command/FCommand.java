@@ -1,24 +1,15 @@
 package com.ykn.fplugin.command;
 
-import java.util.Collection;
-
 import org.bukkit.Bukkit;
 import org.bukkit.command.CommandSender;
-import org.bukkit.entity.Player;
 
 import com.ykn.fplugin.config.Config;
-import com.ykn.fplugin.data.PlayerData;
-import com.ykn.fplugin.data.ServerData;
 import com.ykn.fplugin.language.CommandLanguage;
 
 public class FCommand {
 
     private static void devFunction(CommandSender sender) {
-        Collection<? extends Player> players = Bukkit.getServer().getOnlinePlayers();
-        for (Player player : players) {
-            PlayerData playerData = ServerData.playerdata.get(player.getUniqueId());
-            playerData.afk = 5600;
-        }
+        sender.sendMessage(Config.getPrefix() + "当前没有需要测试执行的功能。");
     }
 
     //f dev [inserting...]
@@ -35,7 +26,28 @@ public class FCommand {
         try {
             devFunction(sender);
         } catch (Exception exception) {
-            sender.sendMessage(Config.getPrefix() + exception.getMessage());
+            sender.sendMessage(Config.getPrefix() + exception.toString());
+        }
+    }
+
+    //f reload [inserting...]
+    public static void runReloadCommand(CommandSender sender, String[] args) {
+        if (!checkPermission(sender, "fplugin.command.reload")) {
+            return;
+        }
+
+        if (args.length > 1) {
+            CommandLanguage.sendUnknownCommandMessage(sender, args[1]);
+            return;
+        }
+
+        try {
+            CommandLanguage.sendStartReloadPluginMessage(sender);
+            Bukkit.getPluginManager().disablePlugin(Config.thisPlugin);
+            Bukkit.getPluginManager().enablePlugin(Config.thisPlugin);
+            CommandLanguage.sendFinishReloadPluginMessage(sender);
+        } catch (Exception exception) {
+            CommandLanguage.sendReloadPluginExceptionMessage(exception, sender);
         }
     }
 

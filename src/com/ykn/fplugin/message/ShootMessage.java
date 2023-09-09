@@ -6,19 +6,6 @@ import org.bukkit.entity.Projectile;
 import com.ykn.fplugin.config.LocationConfig;
 import com.ykn.fplugin.util.Util;
 
-/**
- * 被弹射物击中的消息 <p>
- * 可用占位符: <p>
- * & 颜色字符 <p>
- * [projectile] 弹射物名称 <p>
- * [hitEntity] 被击中的实体名称 <p>
- * [entityLocation] 被击中的实体坐标 <p>
- * [entityHealth] 被击中的实体生命值 <p>
- * [shooter] 攻击者名称 <p>
- * [shooterLocation] 攻击者坐标 <p>
- * [shooterHealth] 攻击者生命值 <p>
- * [distance] 攻击者和被攻击者的距离 <p>
- */
 public class ShootMessage extends PlaceholderMessage {
 
     public Projectile projectile;
@@ -52,6 +39,9 @@ public class ShootMessage extends PlaceholderMessage {
 
         if (this.shooter != null && this.hitEntity != null && this.shooter.isValid() && this.hitEntity.isValid()) {
             outputMessage = outputMessage.replace("[distance]", LocationConfig.formatDistance(this.shooter.getLocation(), this.hitEntity.getLocation()));
+            if (this.shooter.getWorld() != this.hitEntity.getWorld()) {
+                this.isValid = false;
+            }
         } else {
             outputMessage = outputMessage.replace("[distance]", "Invalid");
             this.isValid = false;

@@ -237,6 +237,15 @@ deathmessage:
     both: '[entity] 在与 [damager] 战斗时被 [killer] 凋零'
 
 # 使用指令的消息
+# 使用指令的权限为 fplugin.command.<指令名称>
+# 例如 fplugin.command.f    fplugin.command.reload
 command:
+  # 未知的指令，可用占位符 [args] 未知的指令参数
   unknown: '未知的指令参数 [args]'
+  # 没有执行指令的权限，可用占位符 [permission] 需要的权限
   nopermission: '你没有使用这个指令的权限'
+  reload:
+    start: '开始重新加载插件'
+    end: '重新加载插件完成'
+    # 重载插件失败，可用占位符 [exception] 抛出的异常
+    except: '重载插件出错: [exception]'

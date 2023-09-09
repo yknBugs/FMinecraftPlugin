@@ -29,7 +29,7 @@ public class EntityDeath implements Listener {
         if (entityDeathEvent.getEntity() instanceof Player) {
             this.tagKiller(entityDeathEvent.getEntity().getLastDamageCause());
         } 
-        if (Config.isActiveEntityDeathMessage()) {
+        if (Config.isEntityDeathMessageActive()) {
             this.showEntityDeathMessage(entityDeathEvent.getEntity());
         }
         
@@ -66,7 +66,7 @@ public class EntityDeath implements Listener {
         }
 
         // boss
-        if (Config.isShowBossDeathMessage() && entity.getAttribute(Attribute.GENERIC_MAX_HEALTH).getValue() > Config.getHealthRegardedAsBoss()) {
+        if (Config.isShowBossDeathMessage() && entity.getAttribute(Attribute.GENERIC_MAX_HEALTH).getValue() > Config.getEntityDeathMessageHealth()) {
             Language.log(3, message);
             message = Config.getPrefix() + message;
             Util.sendTextMessageToLimit("fplugin.deathmessage.boss", message);
