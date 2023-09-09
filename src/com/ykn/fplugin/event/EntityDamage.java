@@ -12,6 +12,7 @@ import org.bukkit.event.entity.EntityDamageEvent;
 
 import com.ykn.fplugin.config.Config;
 import com.ykn.fplugin.language.ActionbarLanguage;
+import com.ykn.fplugin.language.Language;
 import com.ykn.fplugin.message.PersistentMessage;
 import com.ykn.fplugin.message.SiegeMessage;
 import com.ykn.fplugin.util.Util;
@@ -44,6 +45,7 @@ public class EntityDamage implements Listener {
         SiegeMessage otherMessage = new SiegeMessage(player, "fplugin.siegemessage.other", ActionbarLanguage.getOtherSiegeMessage());
         PersistentMessage sMessage = new PersistentMessage(0, Config.getSiegeMessageDuration(), Config.getSiegeMessagePriority(), selfMessage);
         PersistentMessage oMessage = new PersistentMessage(0, Config.getSiegeMessageDuration(), Config.getSiegeMessagePriority(), otherMessage);
+        Language.log(4, otherMessage.formatPlaceholders());
         Util.sendUniqueActionbarMessage(player, sMessage, oMessage);
     }
     

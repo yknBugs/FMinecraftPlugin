@@ -7,7 +7,7 @@ import com.ykn.fplugin.FPlugin;
 
 public class Config {
     
-    public static final String version = "0.0.7 b1";
+    public static final String version = "0.0.7 b2";
     public static FPlugin thisPlugin = null;
 
     public static boolean getIsDebug() {

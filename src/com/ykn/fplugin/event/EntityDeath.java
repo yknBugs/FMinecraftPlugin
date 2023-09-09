@@ -5,6 +5,7 @@ import org.bukkit.entity.Entity;
 import org.bukkit.entity.LivingEntity;
 import org.bukkit.entity.Player;
 import org.bukkit.entity.Projectile;
+import org.bukkit.entity.TNTPrimed;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.entity.EntityDamageByEntityEvent;
@@ -140,29 +141,39 @@ public class EntityDeath implements Listener {
 
     /**
      * 获取真正的伤害造成者
-     * @return 如果直接造成伤害的实体是弹射物，则返回弹射物的发射者，否则返回攻击者本身
+     * @return 返回弹射物的发射者或TNT的点燃者，不存在则返回攻击者本身
      */
     private Entity getTrueKiller(Entity killer) {
         if (killer == null) {
             return null;
         }
 
-        if (!(killer instanceof Projectile)) {
-            return killer;
+        if (killer instanceof Projectile) {
+            Projectile projectile = (Projectile) killer;
+            ProjectileSource projectileSource = projectile.getShooter();
+            if (projectileSource == null) {
+                return killer;
+            }
+
+            if (!(projectileSource instanceof Entity)) {
+                return killer;
+            }
+
+            Entity trueKiller = (Entity) projectileSource;
+            return trueKiller;
+        } 
+        
+        if (killer instanceof TNTPrimed) {
+            TNTPrimed tntPrimed = (TNTPrimed) killer;
+            Entity trueKiller = tntPrimed.getSource();
+            if (trueKiller == null) {
+                return killer;
+            }
+
+            return trueKiller;
         }
 
-        Projectile projectile = (Projectile) killer;
-        ProjectileSource projectileSource = projectile.getShooter();
-        if (projectileSource == null) {
-            return killer;
-        }
-
-        if (!(projectileSource instanceof Entity)) {
-            return killer;
-        }
-
-        Entity trueKiller = (Entity) projectileSource;
-        return trueKiller;
+        return killer;
     }
     
 }
