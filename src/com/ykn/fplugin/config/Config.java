@@ -7,7 +7,7 @@ import com.ykn.fplugin.FPlugin;
 
 public class Config {
     
-    public static final String version = "0.0.7 b2";
+    public static final String version = "0.0.8 b2";
     public static FPlugin thisPlugin = null;
 
     public static boolean getIsDebug() {
@@ -153,5 +153,21 @@ public class Config {
 
     public static int getSiegeMonsterDistanceZ() {
         return thisPlugin.getConfig().getInt("siegemessage.distancez", 8);
+    }
+
+    public static boolean isBossMessageActive() {
+        return thisPlugin.getConfig().getBoolean("bossmessage.active", true);
+    }
+
+    public static int getBossMessageHealth() {
+        return thisPlugin.getConfig().getInt("bossmessage.health", 150);
+    }
+
+    public static int getBossMessagePriority() {
+        return thisPlugin.getConfig().getInt("bossmessage.priority", -750);
+    }
+
+    public static int getBossMessageDuration() {
+        return thisPlugin.getConfig().getInt("bossmessage.duration", 600);
     }
 }

@@ -41,5 +41,13 @@ public class ActionbarLanguage extends Language {
     public static String getOtherSiegeMessage() {
         return languageYML.getConfig().getString("actionbar.siege.other", "位于 [location] 的 [player] (生命值: [playerhealth]) 附近有 [entity] 等 [count] 个怪物"); 
     }
+
+    public static String getSelfBossMessage() {
+        return languageYML.getConfig().getString("actionbar.boss.self", "[entity] (生命值: [entityHealth] / [entityMaxHealth]) 距离你 [distance] 米"); 
+    }
+
+    public static String getOtherBossMessage() {
+        return languageYML.getConfig().getString("actionbar.boss.other", "[player] (生命值: [playerHealth]) 正在与位于 [location] 的 [entity] (生命值: [entityHealth] / [entityMaxHealth]) 战斗"); 
+    }
     
 }

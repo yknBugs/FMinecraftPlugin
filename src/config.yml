@@ -80,6 +80,17 @@ siegemessage:
   distancey: 8
   distancez: 8
 
+# 打 Boss 的消息
+bossmessage:
+  active: true
+  # 显示消息的优先级
+  priority: -750
+  # 显示消息的持续时长
+  duration: 600
+  # 最大生命值大于(不包括等于)此的生物被认定为boss
+  health: 150
+
+
 # 定义坐标，和与坐标相关的时间的显示方式
 # 占位符 w世界名称，x y z坐标，p q仰角和水平视角
 # 注意此处的占位符不需要用包括中括号在内的任何符号包围

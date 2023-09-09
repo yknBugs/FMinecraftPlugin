@@ -95,4 +95,13 @@ permissions:
     default: true
   fplugin.siegemessage.other:
     default: op
+  fplugin.bossmessage:
+    default: op
+    children:
+      fplugin.bossmessage.self: true
+      fplugin.bossmessage.other: true
+  fplugin.bossmessage.self:
+    default: true
+  fplugin.bossmessage.other:
+    default: op
   

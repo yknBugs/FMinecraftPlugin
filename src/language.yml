@@ -35,12 +35,26 @@ actionbar:
   # [count] 附近实体的数量
   # [player] 被围攻者
   # [playerHealth] 被围攻者血量
-  # [playerHunger] 被围攻者的生命值
+  # [playerHunger] 被围攻者的饥饿值
   # [location] 被围攻者的坐标
   # [biome] 被围攻者所在的生物群系
   siege:
     self: '你附近有 [entity] 等 [count] 个怪物'
     other: '位于 [location] 的 [player] (生命值: [playerHealth]) 附近有 [entity] 等 [count] 个怪物'
+  # 玩家正在与boss战斗时候的消息
+  # 可用占位符
+  # [entity] boss的名称
+  # [entityHealth] boss的生命值
+  # [entityMaxHealth] boss的最大生命值
+  # [player] 与之战斗的玩家
+  # [playerHealth] 玩家的血量
+  # [playerHunger] 玩家的饥饿值
+  # [location] boss的坐标
+  # [biome] boss所在的生物群系
+  # [distance] 玩家到boss间的距离
+  boss:
+    self: '[entity] (生命值: [entityHealth] / [entityMaxHealth]) 距离你 [distance] 米'
+    other: '[player] (生命值: [playerHealth]) 正在与位于 [location] 的 [entity] (生命值: [entityHealth] / [entityMaxHealth]) 战斗'
 
 # 玩家挂机消息
 # 可用占位符
